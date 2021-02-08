@@ -1,9 +1,10 @@
 .App {
   text-align: center;
+  min-height: 100vh;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 8vmin;
   pointer-events: none;
 }
 
@@ -11,10 +12,10 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} 
 
 .App-header {
-  background-color: #282c34;
+  background-color: hsl(0, 0%, 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,9 +25,96 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.TitleReservations {
+  margin-top: 30px;
+  margin-bottom: 11px;
+  font-family: 'Montserrat', sans-serif;
+  justify-content: space-around;
+  
+  
 }
+.Reservations{
+  height: 70px;
+  width: 900px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  -webkit-box-align: center;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 10px;
+
+}
+.ReservationsMain{
+  
+  flex-direction:column;
+  display: flex;
+  justify-content: space-around;
+  font-family: 'Montserrat', sans-serif;
+  align-items: center;
+}
+.itemsReservation{
+  line-height: 0mm;
+}
+.DPk{
+  margin-top: 1px;
+  margin-bottom: 60px;
+  size: 100px;
+  
+  
+}
+.datePicker {
+font-size: 24px;
+width: 208px;
+align-items: center;
+align-content: center;
+margin-bottom: -30px;
+font-family: 'Montserrat', sans-serif;
+font-weight:normal;
+margin-left: -30px;
+border: 1px solid rgb(199, 197, 197);
+
+
+}
+.react-datepicker {
+  font-size: 1em;
+  align-items: center;
+  align-content: center;
+}
+.react-datepicker__header {
+  padding-top: 0.8em;
+  align-items: center;
+  align-content: center;  
+}
+.Calendar{
+  height: 37px;
+  width: 37px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 1px;
+  position: absolute;
+  
+}
+.Button{
+  margin-left: 140px;
+  
+}
+.Dropdown{
+  font-size: 19px;
+  width: 247px;
+  margin-top: 25px;
+  margin-bottom: 5px;
+  align-items: center;
+  align-content: center;
+  margin-left: 505px;
+  font-family: 'Montserrat', sans-serif;
+  align-items: center;
+  font-weight: bold;
+  
+}
+
 
 @keyframes App-logo-spin {
   from {
