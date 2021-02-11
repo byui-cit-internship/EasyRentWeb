@@ -14,6 +14,12 @@ import ModalFooter from 'react-bootstrap/ModalFooter';
 //import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Select from 'react-select'
 
+
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations"; 
 
 function MyVerticallyCenteredModal(props) {
@@ -23,14 +29,14 @@ function MyVerticallyCenteredModal(props) {
   // const [reservationItems, setReservationItems] = useState(props.reservationItems);
   const [reservation, setReservation] = useState(props.reservation || {reservationItems: []});
  
-  let options = [];
-  const { reservationItems = []}  = props;
-  options = reservationItems.map(item =>({label: item.description, value: item.description}))
-  // const options = [
-  //   { label: 'Thing 1', value: 1},
-  //   { label: 'Thing 2', value: 2},
-  // ];
-  console.log(options)
+  // let options = [];
+  // const { reservationItems = []}  = props;
+  // options = reservationItems.map(item =>({label: item.description, value: item.description}))
+  // // // const options = [
+  // //   { label: 'Thing 1', value: 1},
+  // //   { label: 'Thing 2', value: 2},
+  // // ];
+  // console.log(options)
   return (
     <Modal
       {...props}
@@ -53,14 +59,20 @@ function MyVerticallyCenteredModal(props) {
               
               ))}
                */}
-               {/*
+               {
                  props.reservation.reservationItems.map(item => (
-                    <div>{item.description}</div>
+                    <div>
+                      <FormControlLabel
+                      id={item.description} 
+                      control={<Checkbox color="primary"  />}
+                      label={item.description}
+                  />
+                  </div>
                  ))
-                 */}
+                 }
                
-               <Select options={options} 
-               isMulti />
+               {/* <Select options={options} 
+               isMulti /> */}
                {/* <ReactMultiSelectCheckboxes options={options} /> */}
                
                {/* {JSON.stringify(props.reservation)} */}
@@ -71,7 +83,7 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Footer>
         <div>
         <Button className="ReturnButton"
-          style={{ color: "white", background: "#80C140", width: '90px'}} onClick={props.onHide}><Text>Return</Text>
+          style={{ color: "white", background: "#6B9D41", width: '90px'}} onClick={props.onHide}><Text>Return</Text>
         </Button>
         </div>
       </Modal.Footer>
