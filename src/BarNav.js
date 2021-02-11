@@ -9,7 +9,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import logo from './BYUI.png';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -40,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: 'absolute',
+    marginLeft: '100%',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -47,10 +47,11 @@ const useStyles = makeStyles((theme) => ({
     
     },
     marginLeft: 0,
+    height: 35,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(123),
-      width: '18%',
+      marginLeft: theme.spacing(160), //120
+      width: '20%',
     },
   },
   searchIcon: {
@@ -96,7 +97,7 @@ export default function SearchAppBar() {
           <img src={logo} className="App-logo" alt="logo" />
           <div>
           <title className={classes.title} variant="h6" Wrap>
-            Ourdoor Resource Center
+            Outdoor Resource Center
           </title>
           <subtitle className={classes.subtitle} variasnt="h6" Wrap>
             BYU-Idaho
@@ -107,7 +108,7 @@ export default function SearchAppBar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
+            <InputBase 
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
