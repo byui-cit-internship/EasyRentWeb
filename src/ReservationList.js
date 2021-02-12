@@ -26,9 +26,9 @@ function MyVerticallyCenteredModal(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  // const [reservationItems, setReservationItems] = useState(props.reservationItems);
-  const [reservation, setReservation] = useState(props.reservation || {reservationItems: []});
- 
+  const [reservationItems, setReservationItems] = useState(props.reservationItems);
+  const [reservation, setReservation] = useState(props.reservation || { reservationItems:[]});
+
   // let options = [];
   // const { reservationItems = []}  = props;
   // options = reservationItems.map(item =>({label: item.description, value: item.description}))
@@ -52,15 +52,8 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Body>
         <div >
          
-              {/* {props.reservation.reservationItems.map((itemsR, i) => (
-                <p key={i} >
-                  {itemsR.description}
-                </p>
-              
-              ))}
-               */}
                {
-                 props.reservation.reservationItems.map(item => (
+                 reservationItems.map(item => (
                     <div>
                       <FormControlLabel
                       id={item.description} 
@@ -69,13 +62,9 @@ function MyVerticallyCenteredModal(props) {
                   />
                   </div>
                  ))
-                 }
+              }
                
-               {/* <Select options={options} 
-               isMulti /> */}
-               {/* <ReactMultiSelectCheckboxes options={options} /> */}
-               
-               {/* {JSON.stringify(props.reservation)} */}
+
                
             
         </div>
@@ -149,7 +138,7 @@ function ReservationList(props) {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 reservation={reservation}
-                reservationItems={reservation.reservationItems}
+                reservationItems={reservation ? reservation.reservationItems : []}
               />
             </div>
           </li>
