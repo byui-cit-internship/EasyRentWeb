@@ -1,0 +1,34 @@
+steps:
+
+  # This step stops the easyrent pod
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: Stop Pod
+    args:
+      - 'scale'
+      - 'deploy'
+      - 'easyrent-test'
+      - '--replicas=0'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+
+      # This step deploys the application in Kubernetes
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - run
+      - --filename=app-test.yaml
+      - --image=gcr.io/$PROJECT_ID/easyrent:$_SHORT_SHA
+      - --location=us-east1-b
+      - --cluster=cluster-1
+
+  # This step scales up the easyrent pod
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: Start Pod
+    args:
+      - 'scale'
+      - 'deploy'
+      - 'easyrent-test'
+      - '--replicas=1'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
