@@ -89,4 +89,4 @@ metadata:
   name: easyrent-prod-certificate
 spec:
   domains:
-    - easyrent-api-prod.cit362.com
+    - easyrent-api-prod.cit362.net

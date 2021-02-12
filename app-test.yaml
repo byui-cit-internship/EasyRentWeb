@@ -89,4 +89,4 @@ metadata:
   name: easyrent-test-certificate
 spec:
   domains:
-    - easyrent-api-test.cit362.com
+    - easyrent-api-test.cit362.net
