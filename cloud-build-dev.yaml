@@ -1,7 +1,7 @@
 steps:
 
   # This step builds the container image.
-  - name: gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     id: Build
     args:
       - 'build'
@@ -19,7 +19,7 @@ steps:
       - 'gcr.io/$PROJECT_ID/easyrent-app:$SHORT_SHA'
 
   # This step builds the container image.
-  - name: gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     id: Build-Latest
     args:
       - 'build'
