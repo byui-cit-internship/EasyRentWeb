@@ -26,17 +26,7 @@ function MyVerticallyCenteredModal(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [reservationItems, setReservationItems] = useState(props.reservationItems);
-  const [reservation, setReservation] = useState(props.reservation || { reservationItems:[]});
 
-  // let options = [];
-  // const { reservationItems = []}  = props;
-  // options = reservationItems.map(item =>({label: item.description, value: item.description}))
-  // // // const options = [
-  // //   { label: 'Thing 1', value: 1},
-  // //   { label: 'Thing 2', value: 2},
-  // // ];
-  // console.log(options)
   return (
     <Modal
       {...props}
@@ -53,7 +43,7 @@ function MyVerticallyCenteredModal(props) {
         <div >
          
                {
-                 reservationItems.map(item => (
+                 props.reservationItems.map(item => (
                     <div>
                       <FormControlLabel
                       id={item.description} 
@@ -138,7 +128,7 @@ function ReservationList(props) {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 reservation={reservation}
-                reservationItems={reservation ? reservation.reservationItems : []}
+                reservationItems={reservation.reservationItems ? reservation.reservationItems : []}
               />
             </div>
           </li>
