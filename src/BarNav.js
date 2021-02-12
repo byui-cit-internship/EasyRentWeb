@@ -28,34 +28,32 @@ const useStyles = makeStyles((theme) => ({
   },
   subtitle: {
     color: '#EBEBEB',
-    fontSize: 18,
+    fontSize: 19,
     marginTop: 0,
+    
     marginBottom: -10,
-    marginLeft: -183,
+    marginLeft: -175,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
   },
   search: {
-    position: 'absolute',
-    marginLeft: '100%',
+ 
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
-    
+      
     },
-    marginLeft: 0,
+    position: 'absolute',
     height: 35,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(160), //120
-      width: '20%',
-    },
+    width: '17%',
+    right: 15,
+    
   },
   searchIcon: {
-    padding: theme.spacing(0.9, 1.5),
+    padding: theme.spacing(0.6, 1),
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -67,15 +65,15 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1, 1, 1, 9),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: '100%',
       '&:focus': {
-        width: '30%',
+        width: '100%',
       },
     },
   },

@@ -28,10 +28,11 @@
 
 .TitleReservations {
   margin-top: 30px;
-  margin-bottom: 11px;
+  margin-bottom: 1px;
   font-family: 'Montserrat', sans-serif;
   justify-content: space-around;
   color: #006EB6;
+  
 }
 
 .Reservations{
@@ -41,13 +42,18 @@
   border-radius: 5px;
   display: flex;
   flex-direction:row;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
   font-family: 'Montserrat', sans-serif;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 10px;
-  margin-left: 400px; /*220*/
-  justify-content: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+}
+.RecervationsCenterItems{
+  align-items: center;
+  justify-content: center;
+
 }
 
 .ReservationsMain{
@@ -71,14 +77,16 @@
 
 .datePicker {
 font-size: 23px;
-height: 45px;
-width: 204px;
-align-items: center;
+height: 48px;
+width: 247px;
+text-align-last: center;
+
 align-content: center;
-margin-bottom: -30px;
+margin-bottom: -10px;
 font-family: 'Montserrat', sans-serif;
 font-weight:normal;
-margin-left: -32px;
+margin-left: auto;
+margin-right: auto;
 border: 1px solid rgb(199, 197, 197);
 }
 
@@ -95,10 +103,12 @@ border: 1px solid rgb(199, 197, 197);
 }
 
 .Calendar{
-  height: 47px;
-  width: 47px;
-  margin-top: -1.5px;
+  height: 52px;
+  width: 52px;
+  margin-top: -2px;
   margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 1px;
   position: absolute;
   color: #006EB6;
@@ -107,9 +117,10 @@ border: 1px solid rgb(199, 197, 197);
 .Dropdown{
   font-size: 22px;
   width: 247px;
-  margin-top: 25px;
+  margin-top: 30px;
   margin-bottom: 10px;
-  margin-left: 730px; /*730*/
+  margin-left: auto; 
+  margin-right: auto;
   font-family: 'Montserrat', sans-serif;
   align-items: center;
   align-content: center;
@@ -140,17 +151,17 @@ border: 1px solid rgb(199, 197, 197);
 }
 
 .SearchBar {
-  margin-left: 900px;
+  margin-left: auto;
 }
 
 .footer {
   flex-shrink: 0;
   text-align: center;
-  background-color: #000000;
-  height: 90px;
+  background-color: #252525;
+  height: 60px;
   position:absolute;
   left:0;
-  bottom:0;
+  bottom:auto;
   right:0;
 }
 
@@ -158,12 +169,10 @@ border: 1px solid rgb(199, 197, 197);
   flex-shrink: 0;
   text-align: center;
   background-color: #04629f;
-  height: 90px;
-  margin-bottom: 80px;
-  margin-top: 80px;
-  position:absolute;
+  text-align: center;
+  position:flex;
   left:0;
-  bottom:0;
+  bottom:20px;
   right:0;
 }
 
@@ -172,7 +181,8 @@ border: 1px solid rgb(199, 197, 197);
   width: 70px;
   align-items: center;
   align-content: center;
-  margin-top: 25px;
+  margin-top:10px;
+  margin-bottom: 1px;
 }
 
 .Modal{
@@ -197,6 +207,30 @@ border: 1px solid rgb(199, 197, 197);
 .MuiCheckbox-colorPrimary.Mui-checked {
 color: '#006EB6';
 }
+.SearchBarMenu{
+margin-left: auto;
+width: 200px;
+background-color:#252525;
+border-radius: 5px;
+position: 'absolute',
+}
+/* .search: {
+  position: 'absolute',
+  margin: 'auto',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: fade(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: fade(theme.palette.common.white, 0.25),
+  
+  },
+  marginLeft: 0,
+  height: 35,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(160), //120
+    width: '20%',
+  }, */
+
 
 @keyframes App-logo-spin {
   from {

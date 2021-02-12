@@ -37,11 +37,11 @@ function App() {
     <div className="App">
         <BarNav/>
         <h1 className="TitleReservations" variant="h1" Wrap>
-          Due Date Reservations
+          Due Date Returns
         </h1>
 
         <div className="Dropdown">
-          <Dropdown className="DropdownColor" options={options} value={'Today'} right="" />
+          <Dropdown className="DropdownColor" options={options} value={'Today'} />
         </div>
 
         <div className="DPk">
@@ -57,11 +57,6 @@ function App() {
         <div >
           <ReservationList/>
         </div>
-
-        <div>
-          <Footer2/>
-          <Footer/>
-       </div>   
     </div>   
   )}
 

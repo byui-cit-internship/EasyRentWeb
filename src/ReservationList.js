@@ -20,6 +20,10 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
+
+import Footer from './Footer';
+import Footer2 from './Footer2';
+
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations"; 
 
 function MyVerticallyCenteredModal(props) {
@@ -100,9 +104,10 @@ function ReservationList(props) {
   } else {
     return (
       <>
-        <div >
+        <div style={{overflow:'auto', height: 'inherit'}}>
+        
         {items.map(item => (
-          <li className="Reservations" key={item.id}>
+          <li className="Reservations"  key={item.id} >
             <div className="Customer" >
               <Text>Customer:&nbsp;</Text>  
             </div>
@@ -121,7 +126,7 @@ function ReservationList(props) {
                 }}
                 
               >
-                Check Reservations Items
+                Return Items
               </Button>
                   
               <MyVerticallyCenteredModal
@@ -133,7 +138,11 @@ function ReservationList(props) {
             </div>
           </li>
         ))}
+
       </div >
+          <Footer2/>
+          <Footer/>
+
     </>
     );
   }
