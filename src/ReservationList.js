@@ -1,6 +1,6 @@
 import React, {useState, TouchableOpacity, useEffect} from 'react';
 import App from './App.css';
-import Button from '@material-ui/core/Button';
+
 import { FormatColorFill } from '@material-ui/icons';
 import { View } from 'react-view';
 import Text from 'react-text';
@@ -14,7 +14,7 @@ import ModalFooter from 'react-bootstrap/ModalFooter';
 //import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Select from 'react-select'
 
-
+import Button from 'react-bootstrap/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -24,13 +24,98 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Footer from './Footer';
 import Footer2 from './Footer2';
 
+import Divider from '@material-ui/core/Divider';
+
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations"; 
+
+// const populateChecked = ( items ) => {
+// let counter = 0;
+// let checked = {};
+// items.forEach((item) => {
+//   checked[counter++] = item.returned;
+// })
+// return checked;
+// }
+// football
+// baseball
+
+// {
+// footbal: true,
+// baseball: false
+// }
 
 function MyVerticallyCenteredModal(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checked, setChecked] = useState({});
+
+  
+
+  console.log('props. =======', props.reservationItems);
+  /*
+  React renders the componet multiple times, and it migth render a component initially with no value
+
+  */
+ console.log('==========reser ******', props.reservationItems)
+  const obj = {}
+  props.reservationItems.map(item => {obj[item.itemId] = false})
+  const [checkboxState, setCheckboxState] = useState(obj)
+  // {23445: true}
+
+
+  // if (!props.reservationItems.length) return null;
+  const handleChange = (event) => {
+    setCheckboxState({...checkboxState, [event.target.name]: event.target.checked})
+    console.log('============ the state is: ', checkboxState)
+  }
+
+  const onCheckAll = (event) => {
+    const update = {}
+    if (event.target.checked) {
+      props.reservationItems.map(item => { 
+        update[item.itemId] = true;
+      })
+    } else {
+      props.reservationItems.map(item => { 
+        update[item.itemId] = false;
+      })
+    }
+    setCheckboxState(update)
+    setCheckedAll(event.target.checked);
+  }
+  let allChecked = true;
+  props.reservationItems.forEach(item => {
+    if (!checkboxState[item.itemId]) allChecked = false;
+  })
+  
+  if ( !checkedAll &&  allChecked) {
+    setCheckedAll(true);
+  }
+  if (checkedAll && !allChecked) {
+    setCheckedAll(false);
+  }
+
+  /*
+    Async setState => 
+      React never sets any variable or state in sync.
+      ex: useState() , class component => this.setSate() => asycn in nature
+    => meaning => we can't be sure that there value would be updated on the next line.
+
+    ** Never update any state in a for loop.
+    try to first create the whole state with the updated values and then set the state at 
+    once.
+
+
+    ControlledComponents => 
+    Whenever we deal with forms, react tries to sync the form value (ex: <input value={state.value}) />)
+    So if we try to initialize state with empty object first, then try to add some value to it, it will throw controlled componet error.
+
+  */
+
+  console.log('the hecked state is======', checkboxState)
   return (
     <Modal
       {...props}
@@ -44,23 +129,38 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        
+      
         <div >
-         
+          <div>
+          <FormControlLabel 
+            control={<Checkbox color="primary" onChange={onCheckAll} checked={checkedAll}  />}
+            label="Check / Uncheck All" 
+            
+          />
+          <Divider />
+          </div>
+
                {
                  props.reservationItems.map(item => (
+                   
                     <div>
                       <FormControlLabel
-                      id={item.description} 
-                      control={<Checkbox color="primary"  />}
+                      control={
+                        <Checkbox 
+                          color="primary" 
+                          checked={checkboxState[item.itemId]} 
+                          name={item.itemId} 
+                          onChange={handleChange} 
+                          />
+                        }
                       label={item.description}
                   />
                   </div>
+                  
                  ))
+                 
               }
-               
-
-               
-            
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -81,6 +181,8 @@ function ReservationList(props) {
     const [items, setItems] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
     const [reservation, setReservation] = useState({});
+    const [checkedAll, setCheckedAll] = useState(false);
+    const [checked, setChecked] = useState({});
     
     
     useEffect(() => {
@@ -118,31 +220,31 @@ function ReservationList(props) {
                 
             <div className="Button">
 
-              <Button style={{ FormatColorFill:"#006EB6"}} variant="contained"  onClick={() => { 
+              <Button  variant="contained"  onClick={() => { 
                 setReservation(item);
+                // setChecked(populateChecked(item));
                 setModalShow(true);
-                // <Text>{selectedReservation.reservationItems}</Text> 
+                
                 console.log(JSON.stringify(item))
                 }}
                 
               >
                 Return Items
               </Button>
-                  
-              <MyVerticallyCenteredModal
+                   
+              { reservation.reservationItems && reservation.reservationItems.length && <MyVerticallyCenteredModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 reservation={reservation}
-                reservationItems={reservation.reservationItems ? reservation.reservationItems : []}
-              />
+                reservationItems={reservation.reservationItems}
+              />}
             </div>
           </li>
         ))}
 
       </div >
-          <Footer2/>
-          <Footer/>
-
+          
+                <Footer/>
     </>
     );
   }

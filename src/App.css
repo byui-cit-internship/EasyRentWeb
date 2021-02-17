@@ -1,6 +1,7 @@
+
 .App {
   text-align: center;
-  height: 100vh;
+  min-height: 100%;
   
 }
 
@@ -31,7 +32,8 @@
   margin-bottom: 1px;
   font-family: 'Montserrat', sans-serif;
   justify-content: space-around;
-  color: #006EB6;
+  color: #2e8bfc;
+  font-weight: 400;
   
 }
 
@@ -71,23 +73,30 @@
 
 .DPk{
   margin-top: 1px;
-  margin-bottom: 60px;
-  size: 100px;
+  margin-bottom: 57px;
+  min-width: 200px;
+  width: auto;
+  align-items: center;
+  align-content: center;
 }
 
 .datePicker {
 font-size: 23px;
 height: 48px;
 width: 247px;
-text-align-last: center;
-
 align-content: center;
 margin-bottom: -10px;
 font-family: 'Montserrat', sans-serif;
-font-weight:normal;
-margin-left: auto;
-margin-right: auto;
-border: 1px solid rgb(199, 197, 197);
+font-weight:lighter;
+align-items: center;
+align-content: center;
+border: 1px solid#017bff;
+text-align: center;
+/* color:#006EB6; */
+font-weight: 500;
+border-radius: 4px;
+background-color: #017bff;
+color:#f9f9fa;
 }
 
 .react-datepicker {
@@ -115,29 +124,33 @@ border: 1px solid rgb(199, 197, 197);
 }
 
 .Dropdown{
-  font-size: 22px;
+ 
+  height: 46px;
   width: 247px;
   margin-top: 30px;
   margin-bottom: 10px;
-  margin-left: auto; 
-  margin-right: auto;
   font-family: 'Montserrat', sans-serif;
+  border-radius: 4px;
+  border: 1px solid#017bff;
   align-items: center;
   align-content: center;
-  font-weight: bold;
-  color: #006EB6;
-  height: 46px;
+  margin-left: auto;
+  margin-right: auto;
+ 
 }
 
+.centered{
+  text-align: center;
+  align-items: center;
 
-.DropdownColor{
-  color: #006EB6;
 }
 
 .Button{
   margin-left:auto;
   margin-right: 5px;
+  
 }
+
 
 .Customer{
   font-family: 'Montserrat', sans-serif;
@@ -159,9 +172,9 @@ border: 1px solid rgb(199, 197, 197);
   text-align: center;
   background-color: #252525;
   height: 60px;
-  position:absolute;
-  left:0;
-  bottom:auto;
+  position: absolute;
+  bottom: auto;
+  left: 0;
   right:0;
 }
 
@@ -172,7 +185,7 @@ border: 1px solid rgb(199, 197, 197);
   text-align: center;
   position:flex;
   left:0;
-  bottom:20px;
+  bottom:auto;
   right:0;
 }
 
@@ -198,38 +211,19 @@ border: 1px solid rgb(199, 197, 197);
   color: #f9f9fa;
   background-color: #f9f9fa;
 }
-.checkbox{
-  color: '#006EB6';
-  border-color:#04629f;
-  background-color: #04629f;
+
  
-}
-.MuiCheckbox-colorPrimary.Mui-checked {
-color: '#006EB6';
-}
-.SearchBarMenu{
-margin-left: auto;
-width: 200px;
-background-color:#252525;
-border-radius: 5px;
-position: 'absolute',
-}
-/* .search: {
-  position: 'absolute',
-  margin: 'auto',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: fade(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: fade(theme.palette.common.white, 0.25),
+
+
+
+.dropdown-toggle,
+.dropdown-menu {
+  height: 46px;
+  width: 247px;
+ 
   
-  },
-  marginLeft: 0,
-  height: 35,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(160), //120
-    width: '20%',
-  }, */
+}
+
 
 
 @keyframes App-logo-spin {
