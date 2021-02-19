@@ -13,7 +13,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Text from 'react-text';
 import ReservationList from './ReservationList';
-import Button from 'react-bootstrap/Button';
+import Button from '@material-ui/core/Button';
 import Select from 'react-select';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -37,23 +37,39 @@ const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
 function App() {
 
-  const [startDate, setStartDate] = useState(new Date());
-  const ExampleCustomInput = ({ value, onClick }) => (
-    
-    <button className="example-custom-input" onClick={onClick}>
-      {value}
-    </button>
-    );
-    const options = [ 
-      'Yesterday', 'Today', 'Tomorrow'
-    ];
-    const defaultOption = options[0];
-  
-    const [framework , setFramework] = useState('Today');
-    function handleChange(e){
-      setFramework(e.target.title);
-   };
+  const [startDate, setStartDate] = useState(new Date());    
+  const today = new Date()
+  const yesterday = new Date(today)
+  const tomorrow = new Date(today)
 
+  yesterday.setDate(today.getDate() - 1)
+  tomorrow.setDate(today.getDate() + 1)
+
+  function handleChange(e){
+
+    console.log("The title is =====" , e)
+      setDropDownSelected(e);
+      switch (e){
+        case "Today": 
+          setDaySelected(today);
+          console.log("The title Today =====" , today)
+          break;
+        case "Yesterday":
+          setDaySelected(yesterday);
+          console.log("The title Yesterday =====" , yesterday)
+          break;
+        case "Tomorrow":
+          setDaySelected(tomorrow);
+          console.log("The title Tomorrow =====" , tomorrow)
+          break;
+
+      }
+   };
+    const [dropdownSelected , setDropDownSelected] = useState('Today');
+    const [daySelected, setDaySelected] = useState(new Date());
+    const [DropdownButtonDate, setDropdownButtonDate] = useState({});
+    // setDropdownButtonDate = handleChange;
+ 
   return (
     <div className="App">
         <BarNav/>
@@ -63,23 +79,23 @@ function App() {
 
         {/* <div class="col-md-20">
           <Dropdown className="Dropdown" options={options} value={'Today'} 
-          variant="secondary btn-sm"/>
-          
+          variant="secondary btn-sm"/> 
         </div> */}
-        
+       
         <div className="Dropdown">
-        <DropdownButton  onChange={handleChange} title={framework}>
-          <DropdownItem as="button"><div onClick={(e) => setFramework(e.target.textContent)}>Yesterday</div></DropdownItem>
-          <DropdownItem as="button"><div onClick={(e) => setFramework(e.target.textContent)}>Today</div></DropdownItem>
-          <DropdownItem as="button"><div onClick={(e) => setFramework(e.target.textContent)}>Tomorrow</div></DropdownItem>
+        <DropdownButton  title={dropdownSelected} onSelect={handleChange}>
+          <DropdownItem  eventKey="Yesterday">Yesterday</DropdownItem>
+          <DropdownItem  eventKey="Today">Today</DropdownItem>
+          <DropdownItem  eventKey="Tomorrow">Tomorrow</DropdownItem>
         </DropdownButton>
         </div>
       
 
         <div className="DPk">
           <DatePicker className="datePicker"
-            selected={startDate}
-            onChange={date => setStartDate(date)}
+            selected={daySelected}
+            onChange={date => setDaySelected(date)}
+            
             popperPlacement="bottom"
             dateFormat="MMMM d, yyyy"
           /> 
@@ -87,7 +103,7 @@ function App() {
         </div>
 
         <div >
-          <ReservationList startDate={startDate}/>
+          <ReservationList daySelected={daySelected}/>
         </div>
         <div>
         <Footer2/>

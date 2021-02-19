@@ -11,7 +11,7 @@ import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Select from 'react-select'
-import Button from 'react-bootstrap/Button';
+import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -22,9 +22,7 @@ import Footer2 from './Footer2';
 import Divider from '@material-ui/core/Divider';
 
 
-const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations"; 
-
-// const populateChecked = ( items ) => {
+// const populateChecked = ( items ) => { 
 // let counter = 0;
 // let checked = {};
 // items.forEach((item) => {
@@ -146,7 +144,7 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Footer>
         <div>
         <Button className="ReturnButton"
-          style={{ width: '90px'}} onClick={props.onHide}><Text>Return</Text>
+          style={{ width: '90px',backgroundColor:"#80C140", color:"white"}} onClick={props.onHide}><Text>Return</Text>
         </Button>
         </div>
       </Modal.Footer>
@@ -166,24 +164,29 @@ function ReservationList(props) {
     const [checked, setChecked] = useState({});
     const [dueDate, setDueDate] = useState({});
 
-    const {startDate} = props;
+    const {daySelected} = props;
     
-    useEffect(() => {
-        const {startDate} = props;
-        console.log('startDate', startDate)
-        const startDateInMS = startDate.getTime(); // convert date to ms
+    useEffect(() => {  
+      const {daySelected} = props;
+      let midnightDaySelected = new Date(daySelected);
+      midnightDaySelected.setUTCHours(0,0,0,0);
+      let midnightDayAfterSelected = new Date(daySelected.getDate() +1);
+      midnightDayAfterSelected.setUTCHours(0,0,0,0);
+        console.log('startDate', daySelected)
+        const startDateInMS = daySelected.getTime(); // convert date to ms
         console.log('startDateInMS', startDateInMS);
-
+        // const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan=${midnightDaySelected.getDate()}&dueDateLessThan=${midnightDayAfterSelected.getDate()}'
+        const EasyRentURL = `https://easyrent-api-dev.cit362.com/reservations`
         fetch(EasyRentURL)
         .then(res => res.json())
         .then(
             (result) => {
             setIsLoaded(true);
-            const filteredItems = result.filter( eachItem => {
-              console.log('each date in ms', eachItem.dueDate);
-              let eachDate = new Date(eachItem.dueDate);
+            const filteredItems = result.filter( Item => {
+              console.log('each date in ms', Item.dueDate);
+              let eachDate = new Date(Item.dueDate);
               console.log('each date in format', eachDate);
-              if (eachItem.dueDate > startDateInMS && eachItem.dueDate < startDateInMS + 1000 * 60 * 60 * 24) return true;
+              if (Item.dueDate > startDateInMS  && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000) return true;
             })
              
             setAllItems(result); // to use later allitems
@@ -197,15 +200,16 @@ function ReservationList(props) {
   }, [])
 
   useEffect(() => {
-    const startDateInMS = startDate.getTime();
-    const filteredItems = Allitems.filter( eachItem => {
-      console.log('each date in ms', eachItem.dueDate);
-      let eachDate = new Date(eachItem.dueDate);
+    const {daySelected} = props;
+    const startDateInMS = daySelected.getTime();
+    const filteredItems = Allitems.filter( Item => {
+      console.log('each date in ms', Item.dueDate);
+      let eachDate = new Date(Item.dueDate);
       console.log('each date in format', eachDate);
-      if (eachItem.dueDate > startDateInMS && eachItem.dueDate < startDateInMS + 1000 * 60 * 60 * 24) return true;
+      if (Item.dueDate > startDateInMS && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000 ) return true;
     })
     setItems(filteredItems);
-  }, [startDate])
+  }, [daySelected])
 
 
   if (error) {
@@ -227,7 +231,7 @@ function ReservationList(props) {
             </div>
 
             <div className="CustomerName">
-              {item.dueDate}
+              {item.customerName}
             </div>   
 
             <div className="Button">
