@@ -32,6 +32,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Footer';
 import Footer2 from './Footer2';
 
+
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
 function App() {
@@ -49,7 +50,6 @@ function App() {
     const defaultOption = options[0];
   
     const [framework , setFramework] = useState('Today');
-    
     function handleChange(e){
       setFramework(e.target.title);
    };
@@ -87,7 +87,7 @@ function App() {
         </div>
 
         <div >
-          <ReservationList/>
+          <ReservationList startDate={startDate}/>
         </div>
         <div>
         <Footer2/>

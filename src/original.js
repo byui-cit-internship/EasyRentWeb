@@ -11,8 +11,7 @@ import React, {useState, TouchableOpacity, useEffect} from 'react';
  import ModalTitle from 'react-bootstrap/ModalTitle';
  import ModalBody from 'react-bootstrap/ModalBody';
  import ModalFooter from 'react-bootstrap/ModalFooter';
- //import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
- import Select from 'react-select'
+ import Select from 'react-select';
 
   const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations"; 
 
