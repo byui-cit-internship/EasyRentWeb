@@ -168,49 +168,47 @@ function ReservationList(props) {
     
     useEffect(() => {  
       const {daySelected} = props;
-      let midnightDaySelected = new Date(daySelected);
+      let midnightDaySelected = new Date(daySelected.getTime());
       midnightDaySelected.setUTCHours(0,0,0,0);
+      console.log('midnightDaySelected=====', midnightDaySelected.getTime())
+      const startingTimeStamp = midnightDaySelected.getTime();
+      console.log('startingTimeStamp=====', startingTimeStamp)
+      const endingTimeStamp = midnightDaySelected.getTime() + 24 * 60 * 60 * 1000;
+      console.log('endingTimeStamp=====', endingTimeStamp)
       let midnightDayAfterSelected = new Date(daySelected.getDate() +1);
       midnightDayAfterSelected.setUTCHours(0,0,0,0);
         console.log('startDate', daySelected)
         const startDateInMS = daySelected.getTime(); // convert date to ms
         console.log('startDateInMS', startDateInMS);
-        // const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan=${midnightDaySelected.getDate()}&dueDateLessThan=${midnightDayAfterSelected.getDate()}'
-        const EasyRentURL = `https://easyrent-api-dev.cit362.com/reservations`
+        const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan='+startingTimeStamp+'&dueDateLessThan='+endingTimeStamp;
+      
+        // const EasyRentURL = `https://easyrent-api-dev.cit362.com/reservations`
+        console.log("EasyRent", EasyRentURL)
         fetch(EasyRentURL)
         .then(res => res.json())
         .then(
             (result) => {
+               console.log("result====", result)
             setIsLoaded(true);
-            const filteredItems = result.filter( Item => {
-              console.log('each date in ms', Item.dueDate);
-              let eachDate = new Date(Item.dueDate);
-              console.log('each date in format', eachDate);
-              if (Item.dueDate > startDateInMS  && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000) return true;
-            })
+            // const filteredItems = result.filter( Item => {
+            //   console.log('each date in ms', Item.dueDate);
+            //   let eachDate = new Date(Item.dueDate);
+            //   console.log('each date in format', eachDate);
+            //   if (Item.dueDate > startDateInMS  && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000) return true;
+            // })
              
-            setAllItems(result); // to use later allitems
-            setItems(filteredItems); // to show filtered items
+            // setAllItems(result); // to use later allitems
+            setItems(result.reservationItems); // to show filtered items
             },
         (error) => {
+          console.log("error======", error)
           setIsLoaded(true);
           setError(error);
         }
       )
-  }, [])
-
-  useEffect(() => {
-    const {daySelected} = props;
-    const startDateInMS = daySelected.getTime();
-    const filteredItems = Allitems.filter( Item => {
-      console.log('each date in ms', Item.dueDate);
-      let eachDate = new Date(Item.dueDate);
-      console.log('each date in format', eachDate);
-      if (Item.dueDate > startDateInMS && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000 ) return true;
-    })
-    setItems(filteredItems);
   }, [daySelected])
 
+   
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -231,7 +229,7 @@ function ReservationList(props) {
             </div>
 
             <div className="CustomerName">
-              {item.customerName}
+              {item.dueDate}
             </div>   
 
             <div className="Button">
