@@ -9,7 +9,7 @@ import { View } from 'react-view';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from './Calendar.png';
-import Dropdown from 'react-dropdown';
+import Dropdown from 'react-dropdown' ;
 import 'react-dropdown/style.css';
 import Text from 'react-text';
 import ReservationList from './ReservationList';
@@ -108,6 +108,7 @@ function App() {
         <div>
         <Footer2/>
         </div>
+        <Footer/>
     </div>   
   )}
 

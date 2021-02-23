@@ -1,4 +1,4 @@
-import React, {useState, TouchableOpacity, useEffect} from 'react';
+import React, { useState, TouchableOpacity, useEffect } from 'react';
 import App from './App.css';
 import { FormatColorFill } from '@material-ui/icons';
 import { View } from 'react-view';
@@ -21,17 +21,7 @@ import Footer from './Footer';
 import Footer2 from './Footer2';
 import Divider from '@material-ui/core/Divider';
 
-
-// const populateChecked = ( items ) => { 
-// let counter = 0;
-// let checked = {};
-// items.forEach((item) => {
-//   checked[counter++] = item.returned;
-// })
-// return checked;
-// }
-// football
-// baseball
+const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 
 function MyVerticallyCenteredModal(props) {
   const [error, setError] = useState(null);
@@ -41,28 +31,24 @@ function MyVerticallyCenteredModal(props) {
   const [checked, setChecked] = useState({});
 
   console.log('props. =======', props.reservationItems);
-  /*
-  React renders the componet multiple times, and it migth render a component initially with no value
-  */
   console.log('==========reser ******', props.reservationItems)
   const obj = {}
-  props.reservationItems.map(item => {obj[item.uniqueItemId] = false})
+  props.reservationItems.map(item => { obj[item.uniqueItemId] = false })
   const [checkboxState, setCheckboxState] = useState(obj)
-
-  // if (!props.reservationItems.length) return null;
+  console.log('checkboxState', checkboxState)
   const handleChange = (event) => {
-    setCheckboxState({...checkboxState, [event.target.name]: event.target.checked})
+    setCheckboxState({ ...checkboxState, [event.target.name]: event.target.checked })
     console.log('============ the state is: ', checkboxState)
   }
 
   const onCheckAll = (event) => {
     const update = {}
     if (event.target.checked) {
-      props.reservationItems.map(item => { 
+      props.reservationItems.map(item => {
         update[item.uniqueItemId] = true;
       })
     } else {
-      props.reservationItems.map(item => { 
+      props.reservationItems.map(item => {
         update[item.uniqueItemId] = false;
       })
     }
@@ -73,33 +59,24 @@ function MyVerticallyCenteredModal(props) {
   props.reservationItems.forEach(item => {
     if (!checkboxState[item.uniqueItemId]) allChecked = false;
   })
-  
-  if ( !checkedAll &&  allChecked) {
+
+  if (!checkedAll && allChecked) {
     setCheckedAll(true);
   }
   if (checkedAll && !allChecked) {
     setCheckedAll(false);
   }
-  
-  /*
-   Hooks are called in the exact same order
-    Hooks cannot be used inside loops, if statements, functions. They can't be nested in anything
-    Async setState => 
-      React never sets any variable or state in sync.
-      ex: useState() , class component => this.setSate() => asycn in nature
-    => meaning => we can't be sure that there value would be updated on the next line.
 
-    ** Never update any state in a for loop.
-    try to first create the whole state with the updated values and then set the state at 
-    once.
+  const submitAndClose = () => {
+    const reservationItems = JSON.parse(JSON.stringify(props.reservationItems));
+    
+    reservationItems.forEach((item, index) => {
+      item.returned = checkboxState[index];
+    });
 
-    ControlledComponents => 
-    Whenever we deal with forms, react tries to sync the form value (ex: <input value={state.value}) />)
-    So if we try to initialize state with empty object first, then try to add some value to it, it will throw controlled componet error.
-
-  */
-
-  console.log('the hecked state is======', checkboxState)
+    props.onHide();
+    props.onSubmit(props.reservation, reservationItems);
+  }
 
   return (
     <Modal
@@ -109,43 +86,44 @@ function MyVerticallyCenteredModal(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title  id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter">
           Reservation Items
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div >
           <div>
-          <FormControlLabel 
-            control={<Checkbox color="primary" onChange={onCheckAll} checked={checkedAll}  />}
-            label="Check / Uncheck All" 
-          />
-          <Divider />
+            <FormControlLabel
+              control={<Checkbox color="primary" onChange={onCheckAll} checked={checkedAll} />}
+              label="Check / Uncheck All"
+            />
+            <Divider />
           </div>
-               {
-                 props.reservationItems.map(item => (
-                    <div>
-                      <FormControlLabel
-                      control={
-                        <Checkbox 
-                          color="primary" 
-                          checked={checkboxState[item.uniqueItemId]} 
-                          name={item.uniqueItemId} 
-                          onChange={handleChange} 
-                          />
-                        }
-                      label={item.description}
-                  />
-                  </div>
-                 )) 
-              }
+          {
+            props.reservationItems.map(item => (
+              <div>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={checkboxState[item.uniqueItemId]}
+                      name={item.uniqueItemId}
+                      onChange={handleChange}
+                    />
+                  }
+                  label={item.description}
+                />
+              </div>
+            ))
+          }
         </div>
       </Modal.Body>
       <Modal.Footer>
         <div>
-        <Button className="ReturnButton"
-          style={{ width: '90px',backgroundColor:"#80C140", color:"white"}} onClick={props.onHide}><Text>Return</Text>
-        </Button>
+          <Button className="ReturnButton"
+            style={{ width: '90px', backgroundColor: "#80C140", color: "white" }} onClick={submitAndClose}>
+            <Text>Return</Text>
+          </Button>
         </div>
       </Modal.Footer>
     </Modal>
@@ -153,62 +131,79 @@ function MyVerticallyCenteredModal(props) {
 }
 
 function ReservationList(props) {
-  
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [Allitems, setAllItems] = useState([]);
-    const [items, setItems] = useState([]);
-    const [modalShow, setModalShow] = React.useState(false);
-    const [reservation, setReservation] = useState({});
-    const [checkedAll, setCheckedAll] = useState(false);
-    const [checked, setChecked] = useState({});
-    const [dueDate, setDueDate] = useState({});
 
-    const {daySelected} = props;
-    
-    useEffect(() => {  
-      const {daySelected} = props;
-      let midnightDaySelected = new Date(daySelected.getTime());
-      midnightDaySelected.setUTCHours(0,0,0,0);
-      console.log('midnightDaySelected=====', midnightDaySelected.getTime())
-      const startingTimeStamp = midnightDaySelected.getTime();
-      console.log('startingTimeStamp=====', startingTimeStamp)
-      const endingTimeStamp = midnightDaySelected.getTime() + 24 * 60 * 60 * 1000;
-      console.log('endingTimeStamp=====', endingTimeStamp)
-      let midnightDayAfterSelected = new Date(daySelected.getDate() +1);
-      midnightDayAfterSelected.setUTCHours(0,0,0,0);
-        console.log('startDate', daySelected)
-        const startDateInMS = daySelected.getTime(); // convert date to ms
-        console.log('startDateInMS', startDateInMS);
-        const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan='+startingTimeStamp+'&dueDateLessThan='+endingTimeStamp;
-      
-        // const EasyRentURL = `https://easyrent-api-dev.cit362.com/reservations`
-        console.log("EasyRent", EasyRentURL)
-        fetch(EasyRentURL)
-        .then(res => res.json())
-        .then(
-            (result) => {
-               console.log("result====", result)
-            setIsLoaded(true);
-            // const filteredItems = result.filter( Item => {
-            //   console.log('each date in ms', Item.dueDate);
-            //   let eachDate = new Date(Item.dueDate);
-            //   console.log('each date in format', eachDate);
-            //   if (Item.dueDate > startDateInMS  && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000) return true;
-            // })
-             
-            // setAllItems(result); // to use later allitems
-            setItems(result.reservationItems); // to show filtered items
-            },
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [Allitems, setAllItems] = useState([]);
+  const [items, setItems] = useState([]);
+  const [modalShow, setModalShow] = React.useState(false);
+  const [reservation, setReservation] = useState({});
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checked, setChecked] = useState({});
+  const [dueDate, setDueDate] = useState({});
+
+  const { daySelected } = props;
+
+  useEffect(() => {
+    const { daySelected } = props;
+    let midnightDaySelected = new Date(daySelected);
+    midnightDaySelected.setUTCHours(0, 0, 0, 0);
+    let midnightDayAfterSelected = new Date(daySelected.getDate() + 1);
+    midnightDayAfterSelected.setUTCHours(0, 0, 0, 0);
+    console.log('startDate', daySelected)
+    const startDateInMS = daySelected.getTime(); // convert date to ms
+    console.log('startDateInMS', startDateInMS);
+    // const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan=${midnightDaySelected.getDate()}&dueDateLessThan=${midnightDayAfterSelected.getDate()}'
+    fetch(EasyRentURL)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          const filteredItems = result.filter(Item => {
+            console.log('each date in ms', Item.dueDate);
+            let eachDate = new Date(Item.dueDate);
+            console.log('each date in format', eachDate);
+            if (Item.dueDate > startDateInMS && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000) return true;
+          })
+
+          setAllItems(result); // to use later allitems
+          setItems(filteredItems); // to show filtered items
+        },
         (error) => {
-          console.log("error======", error)
           setIsLoaded(true);
           setError(error);
         }
       )
+  }, [])
+
+
+
+  useEffect(() => {
+    const { daySelected } = props;
+    const startDateInMS = daySelected.getTime();
+    const filteredItems = Allitems.filter(Item => {
+      console.log('each date in ms', Item.dueDate);
+      let eachDate = new Date(Item.dueDate);
+      console.log('each date in format', eachDate);
+      if (Item.dueDate > startDateInMS && Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000) return true;
+    })
+    setItems(filteredItems);
   }, [daySelected])
 
-   
+  const updateReservations = (reservation, reservationItems) => {
+    const data = {
+      ...reservation,
+      reservationItems
+    };
+    console.log('update data', data)
+
+    fetch(EasyRentURL, {
+      method: 'PUT',
+      data: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(console.log)
+  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -218,43 +213,48 @@ function ReservationList(props) {
 
     return (
       <>
-        <div style={{overflow:'auto', height: 'inherit'}}>
-          
-        {items.map(item => (
-          
-          <li className="Reservations"  key={item.Id} >
 
-            <div className="Customer" >
-              <Text>Customer:&nbsp;</Text>  
-            </div>
+        <div style={{ overflow: 'auto', height: 'inherit' }}>
 
-            <div className="CustomerName">
-              {item.dueDate}
-            </div>   
+          {items
+            .filter(customer => customer.reservationItems.some(item => !item.returned))
+            .map(item => (
 
-            <div className="Button">
-              <Button variant="contained" 
-                onClick={() => { 
-                setReservation(item);
-                setModalShow(true);}}
-              >Return Items
+              <li className="Reservations" key={item.Id} >
+
+                <div className="Customer" >
+                  <Text>Customer:&nbsp;</Text>
+                </div>
+
+                <div className="CustomerName">
+                  {item.customerName}
+                </div>
+
+                <div className="Button">
+                  <Button variant="contained"
+                    onClick={() => {
+                      setReservation(item);
+                      setModalShow(true);
+                    }}
+                  >Return Items
               </Button>
 
-              { 
-                reservation.reservationItems && reservation.reservationItems.length && <MyVerticallyCenteredModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                reservation={reservation}
-                reservationItems={reservation.reservationItems}
-              />
-              }
-            </div>
-          </li>
-        ))}
+                  {
+                    reservation.reservationItems?.length && (
+                      <MyVerticallyCenteredModal
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                        reservation={reservation}
+                        reservationItems={reservation.reservationItems}
+                        onSubmit={updateReservations}
+                      />
+                    )}
+                </div>
+              </li>
+            ))}
 
-      </div >
-      <Footer/>
-    </>
+        </div >
+      </>
     );
   }
 }
