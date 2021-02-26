@@ -1,29 +1,9 @@
 import React, { useState, TouchableOpacity, useEffect } from 'react';
-import App from './App.css';
-import { FormatColorFill } from '@material-ui/icons';
-import { View } from 'react-view';
 import Text from 'react-text';
-import FlatList from 'flatlist-react';
-import Modal from 'react-bootstrap/Modal';
-import ModalDialog from 'react-bootstrap/ModalDialog';
-import ModalHeader from 'react-bootstrap/ModalHeader';
-import ModalTitle from 'react-bootstrap/ModalTitle';
-import ModalBody from 'react-bootstrap/ModalBody';
-import ModalFooter from 'react-bootstrap/ModalFooter';
-import Select from 'react-select'
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormLabel from '@material-ui/core/FormLabel';
-import Footer from './Footer';
-import Footer2 from './Footer2';
-import Divider from '@material-ui/core/Divider';
-import MyVerticallyCenteredModal from './components/Modal'
+import MyVerticallyCenteredModal from './components/Modal';
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
-
 function ReservationList(props) {
 
   const [error, setError] = useState(null);
@@ -46,31 +26,20 @@ function ReservationList(props) {
     console.log('startDate', daySelected)
     const startDateInMS = daySelected.getTime(); // convert date to ms
     console.log('startDateInMS', startDateInMS);
-
     // const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan=${midnightDaySelected.getDate()}&dueDateLessThan=${midnightDayAfterSelected.getDate()}'
     fetch(EasyRentURL)
       .then(res => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          const oneDay = 24 * 60 * 60 * 1000;
-
-          const filteredItems = result.filter(Item => {
-            /* console.log('each date in ms', Item.dueDate);
-            let eachDate = new Date(Item.dueDate);
-            console.log('each date in format', eachDate);*/
-
-            
-            /*console.log('due date', Item.dueDate)
-            console.log('startDateInMS', startDateInMS + oneDay)
-            */
           
-           return Item.dueDate === startDateInMS + oneDay;
-            
-          //  return (
-          //     Item.dueDate > startDateInMS &&
-          //     Item.dueDate < startDateInMS + oneDay
-          //   );
+          const filteredItems = result.filter(Item => {
+            console.log('each date in ms', Item.dueDate);
+            let eachDate = new Date(Item.dueDate);
+            console.log('each date in format', eachDate);
+            return (
+              Item.dueDate > startDateInMS &&Item.dueDate < startDateInMS + 24 * 60 * 60 * 1000
+            );
           })
 
           setAllItems(result); // to use later allitems
