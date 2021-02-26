@@ -50,7 +50,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: easyrent-app-dev
     networking.gke.io/managed-certificates: easyrent-app-dev-certificate
-    kubernetes.io/ingress.allow-http: "false"
+#    kubernetes.io/ingress.allow-http: "false"
 spec:
   backend:
     serviceName: easyrent-app-dev-nodeport
