@@ -76,7 +76,7 @@ metadata:
   name: easyrent-test-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: easyrent-test
-    networking.gke.io/managed-certificates: easyrent-test-certificate
+    networking.gke.io/managed-certificates: easyrent-app-test-certificate
 #    kubernetes.io/ingress.allow-http: "false"
 spec:
   backend:
