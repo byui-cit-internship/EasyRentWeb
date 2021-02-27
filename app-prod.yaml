@@ -73,9 +73,9 @@ spec:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: easyrent-prod-ingress
+  name: easyrent-app-prod-ingress
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: easyrent-prod
+    kubernetes.io/ingress.global-static-ip-name: easyrent-app-prod
     networking.gke.io/managed-certificates: easyrent-app-prod-certificate
 #    kubernetes.io/ingress.allow-http: "false"
 spec:
