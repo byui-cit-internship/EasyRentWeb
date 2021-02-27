@@ -62,4 +62,4 @@ metadata:
   name: easyrent-app-test-certificate
 spec:
   domains:
-    - easyrent-dev.citwdd.net
+    - easyrent-test.citwdd.net

@@ -62,4 +62,4 @@ metadata:
   name: easyrent-app-prod-certificate
 spec:
   domains:
-    - easyrent-dev.citwdd.net
+    - easyrent.citwdd.net
