@@ -86,7 +86,7 @@ spec:
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: easyrent-prod-certificate
+  name: easyrent-app-prod-certificate
 spec:
   domains:
     - easyrent-api-prod.cit362.net
