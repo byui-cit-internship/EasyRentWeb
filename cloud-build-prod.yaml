@@ -6,7 +6,7 @@ steps:
     args:
       - 'scale'
       - 'deploy'
-      - 'easyrent-prod'
+      - 'easyrent-app-prod'
       - '--replicas=0'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
@@ -27,7 +27,7 @@ steps:
     args:
       - 'scale'
       - 'deploy'
-      - 'easyrent-prod'
+      - 'easyrent-app-prod'
       - '--replicas=1'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
