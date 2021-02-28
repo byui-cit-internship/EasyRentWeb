@@ -46,7 +46,7 @@ function ReservationList(props) {
     console.log('startDate', daySelected)
     const startDateInMS = daySelected.getTime(); // convert date to ms
     console.log('startDateInMS', startDateInMS);
-
+    
     // const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations?dueDateGreaterThan=${midnightDaySelected.getDate()}&dueDateLessThan=${midnightDayAfterSelected.getDate()}'
     fetch(EasyRentURL)
       .then(res => res.json())

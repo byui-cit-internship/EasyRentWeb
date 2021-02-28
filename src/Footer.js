@@ -1,20 +1,42 @@
 import React from "react";
-import { render } from "react-dom";
 import "./App.css";
 import logo1 from './Gray.png';
 
-const Footer = () => (
-  <footer className="footer">
-    <img className="BYUI-Gray-Logo" src={logo1} />
-  </footer>
-);
 
-const App = () => (
-  <div className="content">
+var style = {
+  backgroundColor: "#252525",
   
-  </div>
-);
+  textAlign: "center",
+  padding: "20px",
+  position: "fixed",
+  left: "0",
+  bottom: "0",
+  height: "50px",
+  width: "100%",
+  
+}
 
-render([<App key="1" />, <Footer key="2" />], document.getElementById("root"));
+var phantom = {
+display: 'block',
+padding: '20px',
+height: '70px',
+width: '100%',
+}
+
+function Footer({ children }) {
+    return (
+        <div>
+           <div style={phantom} />
+            <div style={style}>
+            
+                { children }
+                <img className="BYUI-Gray-Logo" src={logo1} />
+            </div>
+        </div>
+    )
+}
+
+
 
 export default Footer;
+

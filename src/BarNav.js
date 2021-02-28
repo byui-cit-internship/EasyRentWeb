@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -78,9 +78,70 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const onSubmit = e => {
+  e.preventDefault();
+  alert("gotta submit");
+};
 
 export default function SearchAppBar() {
-  const classes = useStyles();
+  const classes = useStyles()
+  
+  const [query, setQuery] = useState('')
+  const [jokes, setJokes] = useState([])
+
+  const focusSearch = useRef(null)
+
+  // useEffect(() => {focusSearch.current.focus()}, [])
+  
+ 
+  const getJokes = async (query) => {
+    const results = await fetch(`https://easyrent-api-dev.cit362.com/reservations?term=${query}`, {
+      headers: {'accept': 'application/json'}
+    })
+    const jokesData = await results.json()
+    return jokesData.results
+  }
+  const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  useEffect(() => {
+    let currentQuery = true
+    const controller = new AbortController()
+
+    const loadJokes = async () => {
+      if (!query) return setJokes([])
+      await sleep(350)
+      if (currentQuery) {
+        const jokes = await getJokes(query, controller)
+        setJokes(jokes)
+      }
+    }
+    loadJokes()
+      
+    return () => {
+      currentQuery = false
+      controller.abort()
+    }
+
+  }, [query])
+
+  let jokesComponents = jokes.map((item, index) => {
+    return (
+      <li className="Reservations" key={item.Id} >
+                  
+
+                  <div className="Customer" >
+                    <p>Customer:&nbsp;</p>
+                    
+                  </div>
+
+                  <div className="CustomerName">
+                    {item.customerName} 
+                  </div>
+        </li>
+    )
+  })
 
   return (
     <div className={classes.root}>
@@ -113,6 +174,8 @@ export default function SearchAppBar() {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={onSubmit}
+              
             />
           </div>
         </Toolbar>

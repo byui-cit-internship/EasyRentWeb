@@ -21,22 +21,15 @@ export default function MyVerticallyCenteredModal(props) {
 
     const [checkedAll, setCheckedAll] = useState(false);
     const [checkboxState, setCheckboxState] = useState(getCheckboxes(props.reservationItems))
-  
-    console.log('props. =======', props.reservationItems);
-    console.log('==========reser ******', props.reservationItems)
-    console.log('checkboxState', checkboxState)
 
     useEffect(() => {
         /// ..
         const checkboxes = getCheckboxes(props.reservationItems);
-        console.log('New props', props)
-        console.log('checkboxes', checkboxes)
         setCheckboxState(checkboxes);
     }, [props]);
 
     const handleChange = (event) => {
       setCheckboxState({ ...checkboxState, [event.target.name]: event.target.checked })
-      console.log('============ the state is: ', checkboxState)
     }
     
     const onCheckAll = (event) => {
@@ -86,7 +79,7 @@ export default function MyVerticallyCenteredModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Reservation Items
+            Rented Items
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
