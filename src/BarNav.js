@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import logo from './BYUI.png';
-
-
+import Sun from './Sun';
+import Mountain from './Mountain.png'
+const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -29,32 +28,32 @@ const useStyles = makeStyles((theme) => ({
   },
   subtitle: {
     color: '#EBEBEB',
-    fontSize: 18,
+    fontSize: 19,
     marginTop: 0,
+    
     marginBottom: -10,
-    marginLeft: -183,
+    marginLeft: -175,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
   },
   search: {
-    position: 'absolute',
+ 
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
+      
+    },
+    position: 'absolute',
+    height: 35,
+    width: '17%',
+    right: 15,
     
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(123),
-      width: '18%',
-    },
   },
   searchIcon: {
-    padding: theme.spacing(0.9, 1.5),
+    padding: theme.spacing(0.6, 1),
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -66,55 +65,86 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1, 1, 1, 9),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: '100%',
       '&:focus': {
-        width: '30%',
+        width: '100%',
       },
     },
   },
 }));
 
 export default function SearchAppBar() {
-  const classes = useStyles();
+  const classes = useStyles()
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [Allitems, setAllItems] = useState([]);
+  const [error, setError] = useState(null);
 
+    useEffect (() => {
+      fetch(EasyRentURL)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setAllItems(result);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+    })
+  
   return (
     <div className={classes.root}>
+      
       <AppBar style={{ margin: 0 , backgroundColor: "#006EB6"}} position="static,">
+    
         <Toolbar>
+        
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
+          <div > 
           <img src={logo} className="App-logo" alt="logo" />
+          </div>
+          
           <div>
           <title className={classes.title} variant="h6" Wrap>
-            Ourdoor Resource Center
+            Outdoor Resource Center
           </title>
           <subtitle className={classes.subtitle} variasnt="h6" Wrap>
             BYU-Idaho
           </subtitle>
           </div>
+          
+          {<img src={Mountain} className="mountain"/> }
+          <div className="sun"><Sun/></div>   
+          {<img src={Mountain} className="mountain"/> }
           </IconButton>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
+            <InputBase 
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              
+              
             />
+          
           </div>
         </Toolbar>
       </AppBar>
