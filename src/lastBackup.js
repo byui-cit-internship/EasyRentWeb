@@ -2,7 +2,6 @@ import React, { useState, TouchableOpacity, useEffect } from 'react';
 import Text from 'react-text';
 import Button from '@material-ui/core/Button';
 import MyVerticallyCenteredModal from './components/Modal';
-import { Today } from '@material-ui/icons';
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 function ReservationList(props) {
@@ -16,15 +15,15 @@ function ReservationList(props) {
   const [checkedAll, setCheckedAll] = useState(false);
   const [checked, setChecked] = useState({});
   const [dueDate, setDueDate] = useState({});
-
+  
   const { daySelected, show } = props;
 
   const getItems = () => {
     const { daySelected } = props;
     let midnightDaySelected = new Date(daySelected);
-    midnightDaySelected.setUTCHours(0, 0, 0, 0);
+    midnightDaySelected.setHours(0, 0, 0, 0);
     let midnightDayAfterSelected = new Date(daySelected.getDate() + 1);
-    midnightDayAfterSelected.setUTCHours(0, 0, 0, 0);
+    midnightDayAfterSelected.setHours(0, 0, 0, 0);
     const startDateInMS = daySelected.getTime(); // convert date to ms
 
     fetch(EasyRentURL)
@@ -43,29 +42,29 @@ function ReservationList(props) {
   }
 
   useEffect(getItems, [])
-
+  
   const returnItem = (item, validReturn) => {
     if (!validReturn) {
       return alert('Unable to return due to possible late fee');
     }
-    
     setReservation(item);
     setModalShow(true);
   }
 
   const oneDay = 24 * 60 * 60 * 1000;
-
+  // Rules to show today, yesterday, and tomorrow Dropdown
   useEffect(() => {
     const { daySelected, show } = props;
-    const startDateInMS = daySelected.getTime();
+    const startDateInMS = new Date();
+    startDateInMS.setHours(0, 0, 0, 0);
     const filteredItems = Allitems.filter(({ dueDate }) => {
       return show === 'today'
         ? dueDate <= startDateInMS 
         : show === 'past'
-          ? dueDate < startDateInMS
-          : dueDate >= startDateInMS 
+        ? dueDate < startDateInMS
+        : dueDate > startDateInMS 
     })
-
+    console.log("This is the start", startDateInMS)
     console.log(filteredItems.length, { filteredItems })
     setItems(filteredItems);
     // getItems();
@@ -89,14 +88,7 @@ function ReservationList(props) {
     })
   };
 
-  const status = (item) => {
-  const firstDate = new Date();
-  const secondDate = item.dueDate;
-  const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
-
-  }
   
-
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
@@ -105,73 +97,60 @@ function ReservationList(props) {
 
     return (
       <>
-
         <div style={{ overflow: 'auto', height: 'inherit' }}>
 
           {items
-            .filter(customer => customer.reservationItems.some(item => !item.returned))
+            .filter(customer => customer.reservationItems
+            .some(item => !item.returned)).sort((a,b)  => b.dueDate - a.dueDate)
             .map(item => {
-              const startDateInMS = daySelected.setUTCHours(0,0,0,0);// + oneDay
-              
-              const validReturn =  item.dueDate >= startDateInMS;
-              // && (show === 'today' && item.dueDate <= startDateInMS)
-              // const validReturn = (show === 'today' && item.dueDate <= startDateInMS)
-              console.log("startDateInMS1", startDateInMS)
-              
-                const firstDate = new Date().setUTCHours(0,0,0,0);
-                const secondDate = new Date(item.dueDate).setUTCHours(0,0,0,0);
-                const diffDays = Math.round((secondDate - firstDate) / oneDay)
-                console.log("first", firstDate)
-            
+              const startDateInMS = new Date();
+              startDateInMS.setHours(0, 0, 0, 0);
+              const validReturn =  item.dueDate >= startDateInMS;  
+              const firstDate = new Date().getTime();
+              const secondDate = new Date(item.dueDate);
+              const diffDays = Math.round((secondDate - firstDate) / oneDay);
+              console.log("first date", startDateInMS)
 
               return (
 
                 <li className="Reservations" key={item.Id} >
-
+                  
                   <div className="Customer" >
                     <Text>Customer:&nbsp;</Text>
-                    
                   </div>
 
                   <div className="CustomerName">
-                    {item.dueDate} 
-                    
-                    {/* {new Date(item.dueDate).toString()} */}
+                    {item.customerName} 
+                    {new Date(item.dueDate).toString()}
                   </div>
 
                   <div className="status" >
                     <Text>Status:&nbsp;</Text>
-                    
                   </div>
 
                   <div className="statusReservation">
-                  
-                  {diffDays}
-                  
-                    
-                    {/* {new Date(item.dueDate).toString()} */}
+                    {diffDays}
                   </div>
 
                   <div className="Button">
                     <Button variant="contained" onClick={() => returnItem(item, validReturn)}>
                       Return Items
-                  </Button>
+                    </Button>
 
-                    {
-                      reservation.reservationItems?.length && (
-                        <MyVerticallyCenteredModal
-                          show={modalShow}
-                          onHide={() => setModalShow(false)}
-                          reservation={reservation}
-                          reservationItems={reservation.reservationItems}
-                          onSubmit={updateReservations}
-                        />
-                      )}
+                    {reservation.reservationItems?.length && (
+                      <MyVerticallyCenteredModal
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                        reservation={reservation}
+                        reservationItems={reservation.reservationItems}
+                        onSubmit={updateReservations}
+                      />
+                    )}
                   </div>
+
                 </li>
               )
             })}
-
         </div >
       </>
     );

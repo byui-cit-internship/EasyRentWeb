@@ -56,7 +56,7 @@ function App() {
     <div className="App">
       <BarNav />
       <h1 className="TitleReservations" variant="h1" Wrap>
-        Due Date Returns
+        Returns by Due Date
         </h1>
 
       <div className="Dropdown">

@@ -21,7 +21,7 @@ export default class Circle extends Component {
       Animated.loop(
         Animated.timing(this.animated, {
             toValue: 1,
-            duration: 20000,
+            duration: 30000,
             easing: Easing.linear,
         }),
       ).start(() => this.animate());

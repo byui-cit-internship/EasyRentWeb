@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import Grid from "@material-ui/core/Grid";
 import logo from './BYUI.png';
 import Sun from './Sun';
 import Mountain from './Mountain.png'
@@ -103,7 +104,7 @@ export default function SearchAppBar() {
   return (
     <div className={classes.root}>
       
-      <AppBar style={{ margin: 0 , backgroundColor: "#006EB6"}} position="static,">
+      <AppBar style={{  backgroundColor: "#006EB6"}} position="static">
     
         <Toolbar>
         
@@ -113,22 +114,25 @@ export default function SearchAppBar() {
             color="inherit"
             aria-label="open drawer"
           >
-          <div > 
+          <Grid style={{ justifySelf: "flex-start" }} item>
           <img src={logo} className="App-logo" alt="logo" />
-          </div>
-          
+          </Grid>
           <div>
           <title className={classes.title} variant="h6" Wrap>
             Outdoor Resource Center
           </title>
-          <subtitle className={classes.subtitle} variasnt="h6" Wrap>
+          <subtitle className={classes.title} variasnt="h6" Wrap>
             BYU-Idaho
           </subtitle>
           </div>
           
-          {<img src={Mountain} className="mountain"/> }
-          <div className="sun"><Sun/></div>   
-          {<img src={Mountain} className="mountain"/> }
+          <Grid item>
+            <Grid justify={"center"} alignItems={"center"} container> 
+              <div className="sun"><Sun/></div>   
+              {<img src={Mountain} className="mountain"/> }
+            </Grid>
+          </Grid>
+         
           </IconButton>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

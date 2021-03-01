@@ -1,6 +1,8 @@
+
 .App {
   text-align: center;
   min-height: 100%;
+  
 }
 
 .App-logo {
@@ -12,7 +14,7 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} 
 
 .App-header {
   background-color: hsl(0, 0%, 100%);
@@ -32,11 +34,12 @@
   justify-content: space-around;
   color: #2e8bfc;
   font-weight: 400;
+  
 }
 
 .Reservations{
   height:70px; 
-  width: 700px;
+  width: 900px;
   border: 1px solid rgb(175, 172, 172);
   border-radius: 5px;
   display: flex;
@@ -49,10 +52,10 @@
   margin-left: auto;
   margin-right: auto;
 }
-
 .RecervationsCenterItems{
   align-items: center;
   justify-content: center;
+
 }
 
 .ReservationsMain{
@@ -89,6 +92,7 @@ align-items: center;
 align-content: center;
 border: 1px solid#017bff;
 text-align: center;
+/* color:#006EB6; */
 font-weight: 500;
 border-radius: 4px;
 background-color: #017bff;
@@ -120,21 +124,25 @@ color:#f9f9fa;
 }
 
 .Dropdown{
+ 
   height: 46px;
   width: 247px;
   margin-top: 20px;
   margin-bottom: 10px;
   font-family: 'Montserrat', sans-serif;
   border-radius: 4px;
+  
   align-items: center;
   align-content: center;
   margin-left: auto;
   margin-right: auto;
+ 
 }
 
 .centered{
   text-align: center;
   align-items: center;
+
 }
 
 .Button{
@@ -143,30 +151,30 @@ color:#f9f9fa;
   color:darkgrey;
 }
 
+
 .Customer{
   font-family: 'Montserrat', sans-serif;
   font-weight:bold;
   font-size: 23px;
   margin-left: 5px;
 }
-
 .status{
   font-family: 'Montserrat', sans-serif;
   font-weight:bold;
   font-size: 23px;
-  margin-right: 0 auto;
-  /* justify-Content: "center";
+  justify-Content: "center";
   align-Items: "center";
-  text-align: center; */
+  margin-right: 0px;
+  margin-left: 0px;
+  
 }
 .statusReservation{
   font-family: 'Montserrat', sans-serif;
   font-size: 23px;
-  margin-left: 0px;
+ 
 }
 .CustomerName{
   font-size: 23px;
-  margin-left: 5px;
 }
 
 .SearchBar {
@@ -208,16 +216,17 @@ color:#f9f9fa;
   height: 100px;
   width: 185px;
   margin-top:0px;
- 
+  margin-bottom: -19px;
+  margin-left: 230px;
   
 }
 .mountain{
- 
+  position:absolute;
   height: 100px;
   width: 190px;
-  margin-top:18px;
+  margin-top:0px;
   margin-bottom: -39px;
- 
+  margin-left: 600px;
 }
 
 .Modal{
@@ -234,21 +243,34 @@ color:#f9f9fa;
   background-color:#017bff;
 }
 
+ 
+
+
+
 .dropdown-toggle,
 .dropdown-menu {
   height: 46px;
   width: 247px;
+ 
+  
 }
 .BYUI{
   height: 50px;
   width: 50px; 
+ 
 }
 
+
+
 @keyframes App-logo-spin {
+  
   from {
     transform: rotate(0deg);
+    
   }
   to {
     transform: rotate(360deg);
+    
   }
+  
 }

@@ -67,7 +67,7 @@ function ReservationList(props) {
     console.log("This is the start", startDateInMS)
     console.log(filteredItems.length, { filteredItems })
     setItems(filteredItems);
-    // getItems();
+    getItems();
   }, [Allitems, show, daySelected])
 
   const updateReservations = (reservation, reservationItems) => {
@@ -115,21 +115,21 @@ function ReservationList(props) {
 
                 <li className="Reservations" key={item.Id} >
                   
-                  <div className="Customer" >
+                  {/* <div className="Customer" >
                     <Text>Customer:&nbsp;</Text>
-                  </div>
+                  </div> */}
 
                   <div className="CustomerName">
                     {item.customerName} 
-                    {new Date(item.dueDate).toString()}
+                    {/* {new Date(item.dueDate).toString()} */}
                   </div>
 
                   <div className="status" >
-                    <Text>Status:&nbsp;</Text>
+                    <Text>Days Overdue:&nbsp;</Text>
                   </div>
 
                   <div className="statusReservation">
-                    {diffDays}
+                    {-1 * diffDays}
                   </div>
 
                   <div className="Button">
