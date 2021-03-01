@@ -2,7 +2,6 @@ import React, { useState, TouchableOpacity, useEffect } from 'react';
 import Text from 'react-text';
 import Button from '@material-ui/core/Button';
 import MyVerticallyCenteredModal from './components/Modal';
-import { Today } from '@material-ui/icons';
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 function ReservationList(props) {
@@ -98,21 +97,19 @@ function ReservationList(props) {
 
     return (
       <>
-
         <div style={{ overflow: 'auto', height: 'inherit' }}>
 
           {items
             .filter(customer => customer.reservationItems
-            .some(item => !item.returned)).sort((a,b) => b.dueDate - a.dueDate)
+            .some(item => !item.returned)).sort((a,b)  => b.dueDate - a.dueDate)
             .map(item => {
               const startDateInMS = new Date();
               startDateInMS.setHours(0, 0, 0, 0);
-              const validReturn =  item.dueDate >= startDateInMS; 
-              const firstDate = new Date().getTime() - oneDay;
+              const validReturn =  item.dueDate >= startDateInMS;  
+              const firstDate = new Date().getTime();
               const secondDate = new Date(item.dueDate);
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
               console.log("first date", startDateInMS)
-            
 
               return (
 
@@ -123,7 +120,7 @@ function ReservationList(props) {
                   </div>
 
                   <div className="CustomerName">
-                    {item.dueDate} 
+                    {item.customerName} 
                     {new Date(item.dueDate).toString()}
                   </div>
 
@@ -149,8 +146,8 @@ function ReservationList(props) {
                         onSubmit={updateReservations}
                       />
                     )}
-
                   </div>
+
                 </li>
               )
             })}

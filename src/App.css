@@ -212,6 +212,23 @@ color:#f9f9fa;
   margin-bottom: 0px;
 }
 
+.sun{
+  height: 100px;
+  width: 185px;
+  margin-top:0px;
+  margin-bottom: -19px;
+  margin-left: 230px;
+  
+}
+.mountain{
+  position:absolute;
+  height: 100px;
+  width: 190px;
+  margin-top:0px;
+  margin-bottom: -39px;
+  margin-left: 600px;
+}
+
 .Modal{
   background-color: #f9f9fa;
 }
@@ -237,14 +254,23 @@ color:#f9f9fa;
  
   
 }
+.BYUI{
+  height: 50px;
+  width: 50px; 
+ 
+}
 
 
 
 @keyframes App-logo-spin {
+  
   from {
     transform: rotate(0deg);
+    
   }
   to {
     transform: rotate(360deg);
+    
   }
+  
 }
