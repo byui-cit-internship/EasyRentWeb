@@ -17,7 +17,7 @@ steps:
     args:
       - run
       - --filename=app-test.yaml
-      - --image=gcr.io/$PROJECT_ID/easyrent:$_SHORT_SHA
+      - --image=gcr.io/$PROJECT_ID/easyrent-app:$_SHORT_SHA
       - --location=us-east1-b
       - --cluster=cluster-1
 
