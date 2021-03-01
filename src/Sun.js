@@ -50,6 +50,6 @@ export default class Circle extends Component {
         position: 'absolute',
         width: 102,
         height: 100, // this is the diameter of circle
-        bottom: -90,
+        bottom: -80,
     }
  });

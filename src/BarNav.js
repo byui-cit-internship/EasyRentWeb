@@ -5,10 +5,11 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import Grid from "@material-ui/core/Grid";
 import logo from './BYUI.png';
 import Sun from './Sun';
 import Mountain from './Mountain.png'
+import Grid from "@material-ui/core/Grid";
+
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     fontWeight: 'bold',
-    marginTop: -10,
-    marginLeft: 15,
+    marginTop: 10,
+    fontSize: 19,
+    marginLeft: 'auto',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -31,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#EBEBEB',
     fontSize: 19,
     marginTop: 0,
-    
     marginBottom: -10,
-    marginLeft: -175,
+    marginLeft: 'auto',
+    marginRight: 'auto',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     height: 35,
     width: '17%',
     right: 15,
+    marginTop: 24,
     
   },
   searchIcon: {
@@ -78,10 +81,17 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  logo: {
+    width: 135,
+    height: 43.54,
+    marginTop: 40
+  }
 }));
+ 
 
 export default function SearchAppBar() {
-  const classes = useStyles()
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [Allitems, setAllItems] = useState([]);
   const [error, setError] = useState(null);
@@ -104,36 +114,33 @@ export default function SearchAppBar() {
   return (
     <div className={classes.root}>
       
-      <AppBar style={{  backgroundColor: "#006EB6"}} position="static">
+      <AppBar style={{ margin: 0 , backgroundColor: "#006EB6"}} position="static,">
     
         <Toolbar>
-        
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-          <Grid style={{ justifySelf: "flex-start" }} item>
-          <img src={logo} className="App-logo" alt="logo" />
+        <Grid justify={"space-between"} container>
+          <Grid xs={1} item>
+            <img src={logo} className="App-logo" alt="logo" />
           </Grid>
+          
           <div>
+            
           <title className={classes.title} variant="h6" Wrap>
             Outdoor Resource Center
           </title>
-          <subtitle className={classes.title} variasnt="h6" Wrap>
+          <subtitle className={classes.subtitle} variasnt="h6" Wrap>
             BYU-Idaho
           </subtitle>
+
           </div>
-          
-          <Grid item>
-            <Grid justify={"center"} alignItems={"center"} container> 
-              <div className="sun"><Sun/></div>   
-              {<img src={Mountain} className="mountain"/> }
+       
+          <Grid xs={6} item>
+            <Grid container justify={"center"}>
+          <div className="sun"><Sun/></div>   
+          {<img src={Mountain} className="mountain"/> }
             </Grid>
-          </Grid>
-         
-          </IconButton>
+            </Grid>
+            <Grid item xs={3} />
+  
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -150,6 +157,7 @@ export default function SearchAppBar() {
             />
           
           </div>
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>

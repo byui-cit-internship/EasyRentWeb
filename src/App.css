@@ -1,16 +1,19 @@
+
 .App {
   text-align: center;
   min-height: 100%;
 }
 
 .App-logo {
-  height: 8vmin;
-  pointer-events: none;
+  height: 9.8vmin;
+  bottom: 10
+  
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+    bottom: 10
   }
 }
 
@@ -49,7 +52,6 @@
   margin-left: auto;
   margin-right: auto;
 }
-
 .RecervationsCenterItems{
   align-items: center;
   justify-content: center;
@@ -89,6 +91,7 @@ align-items: center;
 align-content: center;
 border: 1px solid#017bff;
 text-align: center;
+/* color:#006EB6; */
 font-weight: 500;
 border-radius: 4px;
 background-color: #017bff;
@@ -208,16 +211,22 @@ color:#f9f9fa;
   height: 100px;
   width: 185px;
   margin-top:0px;
- 
+  margin-bottom: -19px;
+
+  
   
 }
 .mountain{
- 
+  position:absolute;
   height: 100px;
   width: 190px;
-  margin-top:18px;
+  margin-top:0px;
   margin-bottom: -39px;
- 
+  margin-left: auto;
+  margin-right: auto;
+  transform: 'translate(-50%, -50%)';
+  text-align: 'center';
+  margin: 'auto',
 }
 
 .Modal{
@@ -244,11 +253,15 @@ color:#f9f9fa;
   width: 50px; 
 }
 
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+
   }
+  
 }
