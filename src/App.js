@@ -14,7 +14,7 @@ import Footer from './Footer';
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
 const today = new Date();
-today.setHours(0,0,0,0);
+today.setHours(0, 0, 0, 0);
 
 const pastDue = new Date(today);
 const future = new Date(today);
@@ -29,6 +29,8 @@ function App() {
   const [daySelected, setDaySelected] = useState(today);
   const [DropdownButtonDate, setDropdownButtonDate] = useState({});
   const [show, setShow] = useState('today');
+  const [filter, setFilter] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   function handleChange(e) {
     console.log("The title is =====", e)
@@ -54,36 +56,41 @@ function App() {
 
   return (
     <div className="App">
-      <BarNav />
+      <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
       <h1 className="TitleReservations" variant="h1" Wrap>
         Returns by Due Date
         </h1>
+      {!filter && <>
+        <div className="Dropdown">
+          <DropdownButton title={dropdownSelected} onSelect={handleChange}>
+            <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
+            <DropdownItem eventKey="Today">Today</DropdownItem>
+            <DropdownItem eventKey="Future">Future</DropdownItem>
+          </DropdownButton>
+        </div>
 
-      <div className="Dropdown">
-        <DropdownButton title={dropdownSelected} onSelect={handleChange}>
-          <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
-          <DropdownItem eventKey="Today">Today</DropdownItem>
-          <DropdownItem eventKey="Future">Future</DropdownItem>
-        </DropdownButton>
-      </div>
+        <div className="DPk">
+          <DatePicker className="datePicker"
+            selected={daySelected.valueOf() !== today.valueOf()
+              ? daySelected
+              : daySelected
+            }
+            onChange={date => setDaySelected(date)}
 
-      <div className="DPk">
-        <DatePicker className="datePicker"
-          selected={daySelected.valueOf() !== today.valueOf()
-            ? daySelected
-            : daySelected
-          }
-          onChange={date => setDaySelected(date)}
-
-          popperPlacement="bottom"
-          dateFormat="MMMM d, yyyy"
-        />
-      </div>
+            popperPlacement="bottom"
+            dateFormat="MMMM d, yyyy"
+          />
+        </div>
+      </>}
 
       <div >
-        <ReservationList show={show} daySelected={daySelected} />
+        <ReservationList
+          setSuggestions={setSuggestions}
+          filter={filter}
+          show={show}
+          daySelected={daySelected} />
       </div>
-     
+
       <Footer />
     </div>
   )

@@ -10,7 +10,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
     "autocomplete": "0.0.1",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.0.0-beta2",
     "create-use-effect": "^0.1.0",
     "flatlist-react": "^1.5.0",
     "floating-label-react": "^1.0.3",

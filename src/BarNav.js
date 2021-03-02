@@ -9,6 +9,10 @@ import logo from './BYUI.png';
 import Sun from './Sun';
 import Mountain from './Mountain.png'
 import Grid from "@material-ui/core/Grid";
+import ListGroup from 'react-bootstrap/ListGroup'
+import { List } from '@material-ui/core';
+
+
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 19,
     marginTop: 0,
     marginBottom: -10,
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    marginRight: 135,
+    
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -64,37 +68,39 @@ const useStyles = makeStyles((theme) => ({
     display: 'absolute m',
     alignItems: 'center',
     justifyContent: 'center',
+    fontfamily: 'Montserrat', 
   },
   inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 9),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+      color: 'inherit',
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 9),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
+      transition: theme.transitions.create('width'),
       width: '100%',
-      '&:focus': {
+      [theme.breakpoints.up('sm')]: {
         width: '100%',
+        '&:focus': {
+          width: '100%',
+        },
       },
     },
-  },
-  logo: {
-    width: 135,
-    height: 43.54,
-    marginTop: 40
-  }
-}));
+    logo: {
+      width: 135,
+      height: 43.54,
+      marginTop: 40
+    }
+  }));
  
 
-export default function SearchAppBar() {
+export default function SearchAppBar({ filter, setFilter, suggestions }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [Allitems, setAllItems] = useState([]);
   const [error, setError] = useState(null);
+  const inputRef = useRef();
 
     useEffect (() => {
       fetch(EasyRentURL)
@@ -110,28 +116,31 @@ export default function SearchAppBar() {
         }
       )
     })
-  
+
+  const showAutoComplete = filter && suggestions.length !== 0 && !(
+    suggestions.length === 1 && suggestions[0] === filter
+  );
+ 
+
   return (
     <div className={classes.root}>
       
       <AppBar style={{ margin: 0 , backgroundColor: "#006EB6"}} position="static,">
     
         <Toolbar>
-        <Grid justify={"space-between"} container>
+        <Grid  container>
           <Grid xs={1} item>
             <img src={logo} className="App-logo" alt="logo" />
           </Grid>
           
-          <div>
-            
+            <div>
           <title className={classes.title} variant="h6" Wrap>
             Outdoor Resource Center
           </title>
           <subtitle className={classes.subtitle} variasnt="h6" Wrap>
             BYU-Idaho
           </subtitle>
-
-          </div>
+            </div>
        
           <Grid xs={6} item>
             <Grid container justify={"center"}>
@@ -145,18 +154,37 @@ export default function SearchAppBar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase 
+            <InputBase className="placeholder"
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              
-              
+              onChange={event => setFilter(event.target.value.trim())}
+              ref={inputRef}
             />
-          
+            {showAutoComplete && (
+            
+              <div style={{cursor:'pointer'}} >
+                {suggestions.map(suggestion => (
+                  <div onClick={() => {
+                    inputRef.current.firstElementChild.value = suggestion;
+                    setFilter(suggestion);
+                  }}>
+                   
+                   <div className="auto-complete">
+                    {suggestion}
+                  </div>
+               
+                  </div>
+                ))}
+            </div>
+            
+            )}
+            
           </div>
+          
           </Grid>
         </Toolbar>
       </AppBar>

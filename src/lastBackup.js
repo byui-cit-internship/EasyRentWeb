@@ -2,6 +2,7 @@ import React, { useState, TouchableOpacity, useEffect } from 'react';
 import Text from 'react-text';
 import Button from '@material-ui/core/Button';
 import MyVerticallyCenteredModal from './components/Modal';
+import Grid from "@material-ui/core/Grid";
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 function ReservationList(props) {
@@ -103,40 +104,44 @@ function ReservationList(props) {
             .filter(customer => customer.reservationItems
             .some(item => !item.returned)).sort((a,b)  => b.dueDate - a.dueDate)
             .map(item => {
+              const oneDay = 24 * 60 * 60 * 1000;
               const startDateInMS = new Date();
               startDateInMS.setHours(0, 0, 0, 0);
               const validReturn =  item.dueDate >= startDateInMS;  
-              const firstDate = new Date().getTime();
+              const firstDate = new Date().getTime() - oneDay;
               const secondDate = new Date(item.dueDate);
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
               console.log("first date", startDateInMS)
 
               return (
-
+                <Grid container>
                 <li className="Reservations" key={item.Id} >
                   
-                  <div className="Customer" >
+                  {/* <div className="Customer" >
                     <Text>Customer:&nbsp;</Text>
-                  </div>
-
+                  </div> */}
+                <Grid xs={3} item>
                   <div className="CustomerName">
                     {item.customerName} 
-                    {new Date(item.dueDate).toString()}
+                    {/* { new Date(item.dueDate).toString()} */}
                   </div>
-
+                  </Grid>
+                  <Grid xs={8} item>
                   <div className="status" >
-                    <Text>Status:&nbsp;</Text>
-                  </div>
+                    <Text>Days Overdue:&nbsp;</Text>
+                    <Text styles={{fontWeight: 'light'}}>{-1 * diffDays}</Text>
+                    </div>
+                    
+                  </Grid>
+                  
 
-                  <div className="statusReservation">
-                    {diffDays}
-                  </div>
-
+                  
+                  <Grid xs={3} item>
                   <div className="Button">
                     <Button variant="contained" onClick={() => returnItem(item, validReturn)}>
                       Return Items
                     </Button>
-
+                  
                     {reservation.reservationItems?.length && (
                       <MyVerticallyCenteredModal
                         show={modalShow}
@@ -147,8 +152,11 @@ function ReservationList(props) {
                       />
                     )}
                   </div>
+                  </Grid>
+                  
 
                 </li>
+                </Grid>
               )
             })}
         </div >

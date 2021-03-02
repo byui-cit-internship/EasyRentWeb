@@ -5,8 +5,8 @@
 }
 
 .App-logo {
-  height: 9.8vmin;
-  bottom: 10
+  height: 9vmin;
+  margin-top: 3px;
   
 }
 
@@ -81,7 +81,7 @@
 
 .datePicker {
 font-size: 23px;
-height: 48px;
+height: 40px;
 width: 247px;
 align-content: center;
 margin-bottom: -10px;
@@ -91,7 +91,6 @@ align-items: center;
 align-content: center;
 border: 1px solid#017bff;
 text-align: center;
-/* color:#006EB6; */
 font-weight: 500;
 border-radius: 4px;
 background-color: #017bff;
@@ -123,7 +122,7 @@ color:#f9f9fa;
 }
 
 .Dropdown{
-  height: 46px;
+  height: 35px;
   width: 247px;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -158,9 +157,7 @@ color:#f9f9fa;
   font-weight:bold;
   font-size: 23px;
   margin-right: 0 auto;
-  /* justify-Content: "center";
-  align-Items: "center";
-  text-align: center; */
+ 
 }
 .statusReservation{
   font-family: 'Montserrat', sans-serif;
@@ -245,7 +242,7 @@ color:#f9f9fa;
 
 .dropdown-toggle,
 .dropdown-menu {
-  height: 46px;
+  /* height: 46px; */
   width: 247px;
 }
 .BYUI{
@@ -253,7 +250,31 @@ color:#f9f9fa;
   width: 50px; 
 }
 
-
+.auto-complete {
+  color: rgba(0, 0, 0, 0.777);
+  background-color:#f3f3f7db;
+  border: 1px solid rgba(175, 172, 172, 0.633);
+  border-radius: 3px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 0px;
+  margin-bottom: 0.8px;
+  font-size: 17px;
+  font-weight: 400;
+ 
+  
+ 
+}
+.suggestion{
+  
+  font-size: 20px;
+}
+.placeholder{
+  font-family: 'Montserrat', sans-serif;
+}
 
 @keyframes App-logo-spin {
   from {
