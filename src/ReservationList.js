@@ -3,8 +3,7 @@ import Text from 'react-text';
 import Button from '@material-ui/core/Button';
 import MyVerticallyCenteredModal from './components/Modal';
 import Grid from "@material-ui/core/Grid";
-import { Filter2 } from '@material-ui/icons';
-import Alert from 'react-bootstrap/Alert'
+
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 function ReservationList(props) {
@@ -18,7 +17,6 @@ function ReservationList(props) {
   const [reservation, setReservation] = useState({});
 
   const { daySelected, show } = props;
-
   const getItems = () => {
     const { daySelected } = props;
     let midnightDaySelected = new Date(daySelected);
@@ -39,7 +37,7 @@ function ReservationList(props) {
                 )
               })
               .sort((a, b) => b.dueDate - a.dueDate)
-          ); // to use later allitems
+          ); 
         },
         (error) => {
           setIsLoaded(true);
@@ -87,7 +85,7 @@ function ReservationList(props) {
 
   const removeRepeated = (item, index, arr) => !arr.slice(0, index).includes(item);
 
-  // Rules to show today, yesterday, and tomorrow Dropdown
+
   useEffect(() => {
     const itemsFilter = filter
       ? filterBySearch()
@@ -115,7 +113,6 @@ function ReservationList(props) {
       body: JSON.stringify(data)
     }).then(() => {
       console.log('Getting items')
-      // Gets all updated items after update
       getItems();
     })
   };
@@ -129,7 +126,7 @@ function ReservationList(props) {
 
     return (
       <>
-        <div style={{ overflow: 'auto', height: 'inherit' }}>
+        <div style={{ overflow: 'auto', height: 'inherit', padding: '0 10px' }}>
           {items
             .map(item => {
               const startDateInMS = new Date();
@@ -138,8 +135,32 @@ function ReservationList(props) {
               const firstDate = new Date().getTime();
               const secondDate = new Date(item.dueDate);
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
+              const daysOverdue = -(diffDays);
               console.log("first date", startDateInMS)
 
+
+              const getLabel = () => {
+                if (daysOverdue === 0){
+                  return 'Due: ';
+              } else if (daysOverdue < 0){
+                  return 'Due in: ';
+              } else{
+                return 'Days Overdue: '
+              }
+            }
+
+              const getDays = () => {
+                if (daysOverdue === 0 ){
+                  return 'Today';
+                } else if (daysOverdue < 0){
+                  return ((-1 * daysOverdue) + ' days');
+                } else{
+                  return daysOverdue
+                }
+              }
+              
+          
+            
               return (
                 <Grid container>
                   <li className="Reservations" key={item.Id} >
@@ -149,10 +170,10 @@ function ReservationList(props) {
                         {/* {new Date(item.dueDate).toString()} */}
                       </div>
                     </Grid>
-                    <Grid xs={8} item>
+                    <Grid xs={6} item>
                       <div className="status" >
-                        <Text>Days Overdue:&nbsp;</Text>
-                        {-1 * diffDays}
+                        <strong>{getLabel()}</strong>
+                        {getDays()}
                       </div>
 
 
@@ -172,7 +193,7 @@ function ReservationList(props) {
                         />
                       )}
                     </div>
-
+                 
                   </li>
                 </Grid>
               )

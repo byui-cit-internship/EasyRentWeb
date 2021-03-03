@@ -7,9 +7,8 @@ import 'react-dropdown/style.css';
 import ReservationList from './ReservationList';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Footer';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
