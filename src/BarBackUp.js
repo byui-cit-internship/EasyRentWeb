@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     marginTop: 10,
     fontSize: 19,
-    marginLeft: -25,
+    marginLeft: 'auto',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 19,
     marginTop: 0,
     marginBottom: -10,
-    marginLeft: -230,
+    marginRight: 135,
 
     display: 'none',
     [theme.breakpoints.up('sm')]: {
@@ -136,12 +136,12 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
       <AppBar style={{ margin: 0, backgroundColor: "#006EB6" }} position="static,">
 
         <Toolbar>
-          <Grid container >
-            <Grid xs={1} item className="">
+          <Grid container className="barnav-container">
+            <Grid xs={3} sm={2} md={1} item className="">
               <img src={logo} className="App-logo" alt="logo" />
             </Grid>
 
-            <Grid xs={3}  item>
+            <Grid xs={0} sm={5} md={4} item>
               <title className={classes.title} variant="h6" Wrap>
                 OUTDOOR RESOURCE CENTER
               </title>
@@ -150,14 +150,14 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
               </subtitle>
             </Grid>
 
-            <Grid xs={4}  item>
+            <Grid xs={5} sm={2} md={4} item>
               <Grid container justify={"center"}>
                 <div className="sun"><Sun /></div>
                 {<img src={Mountain} className="mountain" />}
               </Grid>
             </Grid>
 
-            <Grid xs={2} item>
+            <Grid xs={4} sm={3} md={3} item>
 
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
