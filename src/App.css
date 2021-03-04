@@ -284,6 +284,16 @@ color:#f9f9fa;
 .placeholder{
   font-family: 'Montserrat', sans-serif;
 }
+.ORC{
+  margin-left: auto;
+  font-weight: bold;
+  margin-top: 60px;
+  font-Size: 30,
+}
+.BYUIHeader{
+  margin-left: auto;
+  margin-top: 60px;
+}
 
 @keyframes App-logo-spin {
   from {

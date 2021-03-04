@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     marginTop: 10,
     fontSize: 19,
-    marginLeft: -25,
+    marginLeft: 'auto',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -38,8 +38,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 19,
     marginTop: 0,
     marginBottom: -10,
-    marginLeft: -230,
-
+    marginLeft: -200,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -142,12 +141,12 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
             </Grid>
 
             <Grid xs={3}  item>
-              <title className={classes.title} variant="h6" Wrap>
+              {/* <title className={classes.title} variant="h6" Wrap>
                 OUTDOOR RESOURCE CENTER
               </title>
               <subtitle className={classes.subtitle} variasnt="h6" Wrap>
                 BYU-Idaho
-              </subtitle>
+              </subtitle> */}
             </Grid>
 
             <Grid xs={4}  item>
