@@ -140,23 +140,23 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
               <img src={logo} className="App-logo" alt="logo" />
             </Grid>
 
-            <Grid xs={3}  item>
+          
               {/* <title className={classes.title} variant="h6" Wrap>
                 OUTDOOR RESOURCE CENTER
               </title>
               <subtitle className={classes.subtitle} variasnt="h6" Wrap>
                 BYU-Idaho
               </subtitle> */}
-            </Grid>
+    
 
-            <Grid xs={4}  item>
+            <Grid xs={10}  item>
               <Grid container justify={"center"}>
                 <div className="sun"><Sun /></div>
                 {<img src={Mountain} className="mountain" />}
               </Grid>
             </Grid>
 
-            <Grid xs={4} item>
+            <Grid xs={1} spacing={0} item>
 
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
