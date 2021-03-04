@@ -156,7 +156,7 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
               </Grid>
             </Grid>
 
-            <Grid xs={2} item>
+            <Grid xs={4} item>
 
               <div className={classes.search}>
                 <div className={classes.searchIcon}>

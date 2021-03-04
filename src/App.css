@@ -39,7 +39,17 @@
   color: #2e8bfc;
   font-weight: 400;
 }
-
+.TitleReservations1 {
+  margin-top: 0px;
+  font-family: 'Montserrat', sans-serif;
+  justify-content: space-around;
+  color: #2e8bfc;
+  background-color: #525252;
+  font-weight: 400;
+  font-size: 20px;
+  padding: 4px;
+  
+}
 .Reservations{
   height:70px; 
   width: 650px;
@@ -293,6 +303,9 @@ color:#f9f9fa;
 .BYUIHeader{
   margin-left: auto;
   margin-top: 60px;
+}
+.NavBarTitle{
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

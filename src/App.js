@@ -9,6 +9,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from 'react-bootstrap/Navbar'
 
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
@@ -55,7 +56,16 @@ function App() {
 
   return (
     <div className="App">
+      
       <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
+    {/* <div>
+        <Navbar expand="lg" variant="light" bg="light">
+          <Navbar.Brand className="NavBarTitle" href="#">OUTDOOR RESORCE CENTER</Navbar.Brand>
+        </Navbar>
+     </div> */}
+     <h1 className="TitleReservations1" variant="h1" Wrap>
+        OUTDOOR RESOURCE CENTER
+        </h1>
       <h1 className="TitleReservations" variant="h1" Wrap>
         Returns by Due Date
         </h1>
