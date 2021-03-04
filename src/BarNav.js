@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
     position: 'absolute',
     height: 35,
-    width: '17%',
+    width: '20%',
     right: 15,
     marginTop: 24,
 

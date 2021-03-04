@@ -132,7 +132,7 @@ function ReservationList(props) {
               const startDateInMS = new Date();
               startDateInMS.setHours(0, 0, 0, 0);
               const validReturn = item.dueDate >= startDateInMS;
-              const firstDate = new Date().getTime() - oneDay;
+              const firstDate = new Date().getTime();
               const secondDate = new Date(item.dueDate);
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
               const daysOverdue = -(diffDays);

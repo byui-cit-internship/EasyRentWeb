@@ -38,6 +38,7 @@
   justify-content: space-around;
   color: #2e8bfc;
   font-weight: 400;
+  font-size: 37px;
 }
 .TitleReservations1 {
   margin-top: 0px;
@@ -46,7 +47,7 @@
   color: #EBEBEB;
   background-color: #525252;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   padding: 4px;
   
 }
