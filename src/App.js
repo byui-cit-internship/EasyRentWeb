@@ -1,6 +1,6 @@
 import './App.css';
 import BarNav from './BarNav.js';
-import React, { useState, TouchableOpacity, useEffect } from 'react';
+import React, { useState, TouchableOpacity, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-dropdown/style.css';
@@ -9,7 +9,10 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from 'react-bootstrap/Navbar'
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import Grid from "@material-ui/core/Grid";
+import { propTypes } from 'react-bootstrap/esm/Image';
+import { TrainRounded } from '@material-ui/icons';
 
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
@@ -31,6 +34,13 @@ function App() {
   const [show, setShow] = useState('today');
   const [filter, setFilter] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  
+  const [switchToggle, setSwitchToggle] = useState(false);
+
+  const toggleChecked = () => {
+    setSwitchToggle(!switchToggle);
+  }
+  const reservationList = React.createRef();
 
   function handleChange(e) {
     console.log("The title is =====", e)
@@ -53,22 +63,39 @@ function App() {
         break;
     }
   };
-
+  console.log('switch', switchToggle) 
+ 
   return (
+    
     <div className="App">
       
       <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
-    {/* <div>
-        <Navbar expand="lg" variant="light" bg="light">
-          <Navbar.Brand className="NavBarTitle" href="#">OUTDOOR RESORCE CENTER</Navbar.Brand>
-        </Navbar>
-     </div> */}
+    
      <h1 className="TitleReservations1" variant="h1" Wrap>
         OUTDOOR RESOURCE CENTER
         </h1>
+        <Grid alignItems="center" container>
+          <Grid xs={3} sm={3} alignItems="center" item></Grid>
+          <Grid xs={6} sm={6} alignItems="center" item>
       <h1 className="TitleReservations" variant="h1" Wrap>
         Returns by Due Date
         </h1>
+        </Grid>
+        <Grid xs={3} sm={3} alignItems="center" item>
+      <div >
+          <BootstrapSwitchButton 
+          checked={switchToggle} 
+          onChange={toggleChecked}
+          width={110} 
+          onlabel={'Outside'}
+          offlabel={'Inside'}
+          offstyle={'outline-secondary'}
+          
+        />
+      </div>
+      </Grid>
+      </Grid>
+      
       {!filter && <>
         <div className="Dropdown">
           <DropdownButton title={dropdownSelected} onSelect={handleChange}>
@@ -91,19 +118,29 @@ function App() {
           />
         </div>
       </>}
-
+     
       <div >
         <ReservationList
+          ref={reservationList}
           setSuggestions={setSuggestions}
           filter={filter}
           show={show}
-          daySelected={daySelected} />
+          daySelected={daySelected}
+          switchToggle={({
+            true: 'returned',
+            false: 'recorded'
+          })[switchToggle]}
+          toggleChecked={toggleChecked}
+          />
       </div>
 
       <Footer />
     </div>
   )
+  
+  
 }
+
 
 
 export default App;

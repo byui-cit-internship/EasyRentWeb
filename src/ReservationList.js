@@ -1,5 +1,4 @@
-import React, { useState, TouchableOpacity, useEffect } from 'react';
-import Text from 'react-text';
+import React, { useState, TouchableOpacity, useEffect, useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import MyVerticallyCenteredModal from './components/Modal';
 import Grid from "@material-ui/core/Grid";
@@ -12,32 +11,39 @@ function ReservationList(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [Allitems, setAllItems] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [items, setItems] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const [reservation, setReservation] = useState({});
 
-  const { daySelected, show } = props;
+  const { daySelected, show, switchToggle } = props;
+  
+  console.log(switchToggle)
+
+  const filterByReturned = (results) => {
+    return results.filter(customer => {
+      return customer.reservationItems.some(item => !item[switchToggle])
+    });
+  }
+  const updateItems = (results) => {
+    setAllItems(filterByReturned(results));
+  }
+
   const getItems = () => {
     const { daySelected } = props;
     let midnightDaySelected = new Date(daySelected);
     midnightDaySelected.setHours(0, 0, 0, 0);
     let midnightDayAfterSelected = new Date(daySelected.getDate() + 1);
     midnightDayAfterSelected.setHours(0, 0, 0, 0);
-
+    
     fetch(EasyRentURL)
       .then(res => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          setAllItems(
-            result
-              .filter(customer => {
-                return customer.reservationItems.some(
-                  item => !item.returned
-                )
-              })
-              .sort((a, b) => b.dueDate - a.dueDate)
-          ); 
+          const results = result.sort((a, b) => b.dueDate - a.dueDate);
+          setSearchResults(results);
+          updateItems(results);
         },
         (error) => {
           setIsLoaded(true);
@@ -45,8 +51,15 @@ function ReservationList(props) {
         }
       )
   }
+ 
+  console.log('switchToggleone', switchToggle)
 
   useEffect(getItems, [])
+  useEffect(() => {
+    if (!searchResults.length) return;
+
+    updateItems(searchResults);
+  }, [switchToggle])
 
   const returnItem = (item, validReturn) => {
     if (!validReturn) {
@@ -117,7 +130,6 @@ function ReservationList(props) {
     })
   };
 
-
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
@@ -135,32 +147,30 @@ function ReservationList(props) {
               const firstDate = new Date().getTime() - oneDay;
               const secondDate = new Date(item.dueDate);
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
-              const daysOverdue = -(diffDays);
-              console.log("first date", startDateInMS)
+              const daysOverdue = - (diffDays);
+
 
 
               const getLabel = () => {
-                if (daysOverdue === 0){
+                if (daysOverdue === 0) {
                   return 'Due: ';
-              } else if (daysOverdue < 0){
+                } else if (daysOverdue < 0) {
                   return 'Due in: ';
-              } else{
-                return 'Days Overdue: '
+                } else {
+                  return 'Days Overdue: '
+                }
               }
-            }
 
               const getDays = () => {
-                if (daysOverdue === 0 ){
+                if (daysOverdue === 0) {
                   return 'Today';
-                } else if (daysOverdue < 0){
+                } else if (daysOverdue < 0) {
                   return ((-1 * daysOverdue) + ' days');
-                } else{
+                } else {
                   return daysOverdue
                 }
               }
               
-          
-            
               return (
                 <Grid container>
                   <li className="Reservations" key={item.Id} >
@@ -180,8 +190,8 @@ function ReservationList(props) {
                     </Grid>
                     <div className="Button">
                       <Button variant="contained" onClick={() => returnItem(item, validReturn)}>
-                        Return Items
-                    </Button>
+                        {switchToggle === 'returned' ? 'Return' : 'Record'} Items
+                      </Button>
 
                       {reservation.reservationItems?.length && (
                         <MyVerticallyCenteredModal
@@ -190,10 +200,11 @@ function ReservationList(props) {
                           reservation={reservation}
                           reservationItems={reservation.reservationItems}
                           onSubmit={updateReservations}
+                          toggle={switchToggle}
                         />
                       )}
                     </div>
-                 
+
                   </li>
                 </Grid>
               )

@@ -120,7 +120,7 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
 
   const clearSearch = () => {
     inputRef.current.firstElementChild.value = '';
-    inputRef.current.getAttribute.value = '';
+    // inputRef.current.getAttribute.value = '';
     setFilter('');
     
   };

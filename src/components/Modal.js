@@ -6,19 +6,20 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 
-const getCheckboxes = (reservationItems) => reservationItems.reduce(
-    (checkboxes, {uniqueItemId, returned}) => {
-        checkboxes[uniqueItemId] = returned;
-        return checkboxes;
-    }, {}
-);
 
 export default function MyVerticallyCenteredModal(props) {
-
-    const [checkedAll, setCheckedAll] = useState(false);
-    const [checkboxState, setCheckboxState] = useState(getCheckboxes(props.reservationItems))
-
-    useEffect(() => {
+  const getCheckboxes = (reservationItems) => reservationItems.reduce(
+      (checkboxes, {uniqueItemId, returned, recorded}) => {
+          checkboxes[uniqueItemId] = toggle === 'returned' ? returned : recorded;
+          return checkboxes;
+      }, {}
+  );
+  
+  const { toggle } = props;
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checkboxState, setCheckboxState] = useState(getCheckboxes(props.reservationItems))
+  
+  useEffect(() => {
         const checkboxes = getCheckboxes(props.reservationItems);
         setCheckboxState(checkboxes);
     }, [props]);
@@ -56,7 +57,7 @@ export default function MyVerticallyCenteredModal(props) {
     const submitAndClose = () => {
       const reservationItems = JSON.parse(JSON.stringify(props.reservationItems));
       reservationItems.forEach((item, index) => {
-        item.returned = checkboxState[index];
+        item[toggle] = checkboxState[index];
       });
   
       props.onHide();
@@ -111,7 +112,10 @@ export default function MyVerticallyCenteredModal(props) {
             <Button className="ReturnButton"
               style={{ width: '90px', backgroundColor: "#80C140", color: "white" }} 
               onClick={submitAndClose}>
-              <Text>Return</Text>
+              {toggle === 'returned'
+                ? <Text>Return</Text>
+                : <Text>Record</Text>
+              }
             </Button>
           </div>
         </Modal.Footer>

@@ -308,6 +308,9 @@ color:#f9f9fa;
 .NavBarTitle{
   text-align: center;
 }
+.switchButton{
+margin-left: 100px;
+}
 
 @keyframes App-logo-spin {
   from {
