@@ -57,13 +57,15 @@ export default function MyVerticallyCenteredModal(props) {
     const submitAndClose = () => {
       const reservationItems = JSON.parse(JSON.stringify(props.reservationItems));
       reservationItems.forEach((item, index) => {
-        // toggle // returned, recorded
+       // toggle // returned, recorded
         // item[toggle] = checkboxState[index];
         const state = checkboxState[index];
         if (toggle === 'recorded') {
+          item.returned = state;
           item.recorded = state;
+        } else {
+          item.returned = state;
         }
-        item.returned = state;
       });
   
       props.onHide();
