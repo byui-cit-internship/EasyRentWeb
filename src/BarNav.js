@@ -97,10 +97,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar({ filter, setFilter, suggestions }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [Allitems, setAllItems] = useState([]);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
   const inputRef = useRef();
 
   useEffect(() => {
@@ -120,14 +120,22 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
 
   const clearSearch = () => {
     inputRef.current.firstElementChild.value = '';
-    // inputRef.current.getAttribute.value = '';
+    setSearch('');
     setFilter('');
-    
   };
+
+  const onInputChange = event => {
+    const search = event.target.value.trim();
+    setFilter(search);
+    setSearch(search);
+  }
 
   const showAutoComplete = filter && suggestions.length !== 0 && !(
     suggestions.length === 1 && suggestions[0] === filter
   );
+
+  // const showClose = showAutoComplete || search;
+  const showClose = Boolean(search);
 
   return (
     <div className={classes.root}>
@@ -171,14 +179,16 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
                   }}
 
                   inputProps={{ 'Montserrat': 'search' }}
-                  onChange={event => setFilter(event.target.value.trim())}
+                  onChange={onInputChange}
                   ref={inputRef}
-
                 />
+                
+                {showClose &&
+                  <div onClick={clearSearch} className="close-auto-complete"></div>
+                }
 
                 {showAutoComplete && (
                   <>
-                    <div onClick={clearSearch} className="close-auto-complete"></div>
                     <div style={{ cursor: 'pointer' }} >
                       {suggestions.map(suggestion => (
                         <div onClick={() => {

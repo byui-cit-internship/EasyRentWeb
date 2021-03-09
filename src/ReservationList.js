@@ -16,13 +16,14 @@ function ReservationList(props) {
   const [modalShow, setModalShow] = React.useState(false);
   const [reservation, setReservation] = useState({});
 
-  const { daySelected, show, switchToggle } = props;
+  const { daySelected, show, toggle } = props;
   
-  console.log(switchToggle)
+  console.log(toggle)
 
   const filterByReturned = (results) => {
     return results.filter(customer => {
-      return customer.reservationItems.some(item => !item[switchToggle])
+      return customer.reservationItems.some(item => !item[toggle])
+      // return customer.reservationItems.some(item => !item.returned)
     });
   }
   const updateItems = (results) => {
@@ -35,7 +36,7 @@ function ReservationList(props) {
     midnightDaySelected.setHours(0, 0, 0, 0);
     let midnightDayAfterSelected = new Date(daySelected.getDate() + 1);
     midnightDayAfterSelected.setHours(0, 0, 0, 0);
-    
+
     fetch(EasyRentURL)
       .then(res => res.json())
       .then(
@@ -52,14 +53,14 @@ function ReservationList(props) {
       )
   }
  
-  console.log('switchToggleone', switchToggle)
+  console.log('toggleone', toggle)
 
   useEffect(getItems, [])
   useEffect(() => {
     if (!searchResults.length) return;
 
     updateItems(searchResults);
-  }, [switchToggle])
+  }, [toggle])
 
   const returnItem = (item, validReturn) => {
     if (!validReturn) {
@@ -92,12 +93,10 @@ function ReservationList(props) {
       Boolean(customerName.match(regExp)) ||
       Boolean(customerId.match(regExp)) ||
       reservationItems.some(({ itemId }) => itemId == regExp)
-      // reservationItems.some(({ itemId }) => String(itemId).match(regExp))
     );
   };
 
   const removeRepeated = (item, index, arr) => !arr.slice(0, index).includes(item);
-
 
   useEffect(() => {
     const itemsFilter = filter
@@ -149,8 +148,6 @@ function ReservationList(props) {
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
               const daysOverdue = - (diffDays);
 
-
-
               const getLabel = () => {
                 if (daysOverdue === 0) {
                   return 'Due: ';
@@ -190,7 +187,7 @@ function ReservationList(props) {
                     </Grid>
                     <div className="Button">
                       <Button variant="contained" onClick={() => returnItem(item, validReturn)}>
-                        {switchToggle === 'returned' ? 'Return' : 'Record'} Items
+                        {toggle === 'returned' ? 'Return' : 'Record'} Items
                       </Button>
 
                       {reservation.reservationItems?.length && (
@@ -200,7 +197,7 @@ function ReservationList(props) {
                           reservation={reservation}
                           reservationItems={reservation.reservationItems}
                           onSubmit={updateReservations}
-                          toggle={switchToggle}
+                          toggle={toggle}
                         />
                       )}
                     </div>

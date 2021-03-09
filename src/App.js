@@ -11,8 +11,7 @@ import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import Grid from "@material-ui/core/Grid";
-import { propTypes } from 'react-bootstrap/esm/Image';
-import { TrainRounded } from '@material-ui/icons';
+
 
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
@@ -35,12 +34,11 @@ function App() {
   const [filter, setFilter] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   
-  const [switchToggle, setSwitchToggle] = useState(false);
+  const [switchToggle, setSwitchToggle] = useState(true);
 
   const toggleChecked = () => {
     setSwitchToggle(!switchToggle);
   }
-  const reservationList = React.createRef();
 
   function handleChange(e) {
     console.log("The title is =====", e)
@@ -96,7 +94,7 @@ function App() {
       </Grid>
       </Grid>
       
-      {!filter && <>
+      {!filter &&  switchToggle  && <>
         <div className="Dropdown">
           <DropdownButton title={dropdownSelected} onSelect={handleChange}>
             <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
@@ -121,17 +119,15 @@ function App() {
      
       <div >
         <ReservationList
-          ref={reservationList}
           setSuggestions={setSuggestions}
           filter={filter}
           show={show}
           daySelected={daySelected}
-          switchToggle={({
+          toggle={({
             true: 'returned',
             false: 'recorded'
           })[switchToggle]}
-          toggleChecked={toggleChecked}
-          />
+        />
       </div>
 
       <Footer />

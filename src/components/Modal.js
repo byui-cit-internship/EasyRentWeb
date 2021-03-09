@@ -6,11 +6,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 
-
 export default function MyVerticallyCenteredModal(props) {
   const getCheckboxes = (reservationItems) => reservationItems.reduce(
-      (checkboxes, {uniqueItemId, returned, recorded}) => {
-          checkboxes[uniqueItemId] = toggle === 'returned' ? returned : recorded;
+      (checkboxes, { uniqueItemId, returned, recorded }) => {
+          // checkboxes[uniqueItemId] = toggle === 'returned' ? returned : recorded;
+          checkboxes[uniqueItemId] = returned;
           return checkboxes;
       }, {}
   );
@@ -57,7 +57,13 @@ export default function MyVerticallyCenteredModal(props) {
     const submitAndClose = () => {
       const reservationItems = JSON.parse(JSON.stringify(props.reservationItems));
       reservationItems.forEach((item, index) => {
-        item[toggle] = checkboxState[index];
+        // toggle // returned, recorded
+        // item[toggle] = checkboxState[index];
+        const state = checkboxState[index];
+        if (toggle === 'recorded') {
+          item.recorded = state;
+        }
+        item.returned = state;
       });
   
       props.onHide();
@@ -73,7 +79,7 @@ export default function MyVerticallyCenteredModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Rented Items
+          {toggle === 'returned' ? 'Rented' : 'Returned'} Items
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
