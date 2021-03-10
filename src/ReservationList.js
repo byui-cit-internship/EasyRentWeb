@@ -140,40 +140,47 @@ function ReservationList(props) {
         <div style={{ overflow: 'auto', height: 'inherit', padding: '0 10px' }}>
           {items
             .map(item => {
+
               const startDateInMS = new Date();
               startDateInMS.setHours(0, 0, 0, 0);
+              const dueDateReservation = item.dueDate;
               const validReturn = item.dueDate >= startDateInMS;
-              const firstDate = new Date().getTime();
+              const firstDate = new Date().getTime()- oneDay;
               const secondDate = new Date(item.dueDate);
               const diffDays = Math.round((secondDate - firstDate) / oneDay);
               const daysOverdue = - (diffDays);
+              const hours = Math.round(Math.abs(secondDate - firstDate) / 36e5);
 
               const getLabel = () => {
-                if (daysOverdue === 0) {
+                if (daysOverdue === 0 && !validReturn) {
+                  return 'Hours Overdue: '; 
+                } else if(daysOverdue === 0){
                   return 'Due: ';
                 } else if (daysOverdue < 0) {
                   return 'Due in: ';
-                } else {
-                  return 'Days Overdue: '
+                } else{
+                  return 'Days Overdue: ';
                 }
               }
 
               const getDays = () => {
-                if (daysOverdue === 0) {
-                  return 'Today';
+                if (daysOverdue === 0 && !validReturn) {
+                  return (hours);
+                } else if (daysOverdue === 0){
+                  return 'Today'
                 } else if (daysOverdue < 0) {
                   return ((-1 * daysOverdue) + ' days');
                 } else {
                   return daysOverdue
                 }
               }
-              
+              console.log('dueDate', item.dueDate)
               return (
                 <Grid container>
                   <li className="Reservations" key={item.Id} >
                     <Grid xs={3} item>
                       <div className="CustomerName">
-                        {item.customerName}
+                        {item.dueDate}
                         {/* {new Date(item.dueDate).toString()} */}
                       </div>
                     </Grid>
@@ -185,7 +192,7 @@ function ReservationList(props) {
 
 
                     </Grid>
-                    <div className="Button">
+                    <div >
                       <Button variant="contained" onClick={() => returnItem(item, validReturn)}>
                         {toggle === 'returned' ? 'Return' : 'Record'} Items
                       </Button>

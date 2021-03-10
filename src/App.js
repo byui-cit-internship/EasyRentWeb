@@ -24,6 +24,21 @@ const future = new Date(today);
 pastDue.setDate(today.getDate() - 1);
 future.setDate(today.getDate() + 1);
 
+
+const midnightToday = new Date();
+midnightToday.setHours(0,0,0,0);
+
+const midnightYesterday = new Date();
+midnightYesterday.setDate(midnightToday.getDate() - 1)
+midnightYesterday.setHours(0,0,0,0);
+
+const midnightTomorrow = new Date();
+midnightTomorrow.setDate(midnightTomorrow.getDate() + 1)
+midnightTomorrow.setHours(0,0,0,0);
+
+
+console.log('midnightTomorrow', midnightTomorrow);
+
 function App() {
 
   const [startDate, setStartDate] = useState(new Date());
