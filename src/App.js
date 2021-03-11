@@ -8,7 +8,6 @@ import ReservationList from './ReservationList';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from './Footer';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import Grid from "@material-ui/core/Grid";
 
@@ -39,7 +38,9 @@ midnightTomorrow.setHours(0,0,0,0);
 
 console.log('midnightTomorrow', midnightTomorrow);
 
-function App() {
+function App(props) {
+  
+  const { toggle } = props;
 
   const [startDate, setStartDate] = useState(new Date());
   const [dropdownSelected, setDropDownSelected] = useState('Today');
@@ -50,11 +51,12 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   
   const [switchToggle, setSwitchToggle] = useState(true);
-
+  
+  
   const toggleChecked = () => {
     setSwitchToggle(!switchToggle);
   }
-
+  
   function handleChange(e) {
     console.log("The title is =====", e)
     setDropDownSelected(e);
@@ -77,7 +79,7 @@ function App() {
     }
   };
   console.log('switch', switchToggle) 
- 
+  console.log('toogle1', toggle)
   return (
     
     <div className="App">
@@ -90,7 +92,7 @@ function App() {
         <Grid alignItems="center" container>
           <Grid xs={3} sm={3} alignItems="center" item></Grid>
           <Grid xs={6} sm={6} alignItems="center" item>
-      <h1 className="TitleReservations" variant="h1" Wrap>
+        <h1 className={toggle === 'returned' ? "TitleReservations2" : "TitleReservations"}  variant="h1" Wrap>
         Returns by Due Date
         </h1>
         </Grid>
@@ -102,14 +104,14 @@ function App() {
           width={110} 
           onlabel={'Outside'}
           offlabel={'Inside'}
-          offstyle={'outline-secondary'}
+          offstyle={'danger'}
           
         />
       </div>
       </Grid>
       </Grid>
       
-      {!filter &&  switchToggle  && <>
+      {!filter &&  switchToggle && <>
         <div className="Dropdown">
           <DropdownButton title={dropdownSelected} onSelect={handleChange}>
             <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
@@ -117,7 +119,8 @@ function App() {
             <DropdownItem eventKey="Future">Future</DropdownItem>
           </DropdownButton>
         </div>
-
+       {/* </>} */}
+       {/* {switchToggle &&  <> */}
         <div className="DPk">
           <DatePicker className="datePicker"
             selected={daySelected.valueOf() !== today.valueOf()
@@ -130,7 +133,9 @@ function App() {
             dateFormat="MMMM d, yyyy"
           />
         </div>
-      </>}
+      </>
+      
+      }
      
       <div >
         <ReservationList

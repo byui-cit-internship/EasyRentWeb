@@ -57,7 +57,7 @@ function ReservationList(props) {
     let midnightDayAfterSelected = new Date(daySelected.getDate() + 1);
     midnightDayAfterSelected.setHours(0, 0, 0, 0);
 
-    fetch(getURL())
+    fetch(getURL(range()))
       .then(res => res.json())
       .then(
         (result) => {
@@ -75,7 +75,8 @@ function ReservationList(props) {
  
   console.log('toggleone', toggle)
 
-  useEffect(getItems, []);
+  useEffect(getItems, [props.show]);
+
   useEffect(() => {
     if (!searchResults.length) return;
 
@@ -92,10 +93,36 @@ function ReservationList(props) {
 
   const oneDay = 24 * 60 * 60 * 1000;
 
-  const filterByDate = () => {
+  const range = () => {
     const { show } = props;
-    const startDateInMS = new Date();
-    startDateInMS.setHours(0, 0, 0, 0);
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+    
+    const todayCurrent = new Date();
+
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    tomorrowDate.setHours(0, 0, 0, 0);
+
+    if (show === 'today') {
+      const dueDateGreaterThan = todayDate.valueOf();
+      const dueDateLessThan = tomorrowDate.valueOf();
+
+      return {
+        dueDateGreaterThan,
+        dueDateLessThan
+      };
+    } else if (show === 'past') {
+      const dueDateLessThan = todayCurrent.valueOf();
+      return { dueDateLessThan };
+    } else {
+      const dueDateGreaterThan = todayDate.valueOf();
+      return { dueDateGreaterThan }
+    }
+  };
+
+  /*const filterByDate = () => {
+    const { show } = props;
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
     const todayCurrent = new Date();
@@ -111,7 +138,7 @@ function ReservationList(props) {
           : dueDate > tomorrowDate 
           // : dueDate >= todayCurrent 
     };
-  }
+  }*/
   
   const filterBySearch = () => {
     const regExp = new RegExp(filter, 'i');
@@ -128,7 +155,7 @@ function ReservationList(props) {
   useEffect(() => {
     const itemsFilter = filter
       ? filterBySearch()
-      : filterByDate();
+      : (() => true);
 
     const filteredItems = Allitems.filter(itemsFilter);
 

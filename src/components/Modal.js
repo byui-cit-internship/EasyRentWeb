@@ -10,9 +10,9 @@ import { green } from '@material-ui/core/colors';
 
 const GreenCheckbox = withStyles({
   root: {
-    color: green[400],
+    color: '#017bff',
     '&$checked': {
-      color: green[600],
+      color: '#017bff',
     },
   },
   checked: {},
@@ -137,7 +137,7 @@ export default function MyVerticallyCenteredModal(props) {
         <Modal.Footer>
           <div>
             <Button className="ReturnButton"
-              style={toggle === 'returned' ? { width: '90px', backgroundColor: "#80C140", color: "white" } : { width: '90px', backgroundColor: "#E95056", color: "white" }}
+              style={toggle === 'returned' ? { width: '90px', backgroundColor: "#017bff", color: "white" } : { width: '90px', backgroundColor: "#E95056", color: "white" }}
               onClick={submitAndClose}>
               {toggle === 'returned'
                 ? <Text>Return</Text>
