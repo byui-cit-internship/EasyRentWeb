@@ -2,7 +2,7 @@ import React, { useState, TouchableOpacity, useEffect, useRef } from 'react';
 import MyVerticallyCenteredModal from './components/Modal';
 import Grid from "@material-ui/core/Grid";
 import Button from 'react-bootstrap/Button';
-import { HourglassFullTwoTone } from '@material-ui/icons';
+
 
 const getURL = (range = {}) => {
   const baseURL = 'https://easyrent-api-dev.cit362.com/reservations';
@@ -13,18 +13,8 @@ const getURL = (range = {}) => {
   }
   return url;
 };
-/*`
-dueDateGreaterThan
-dueDateLessThan
-https://easyrent-api-dev.cit362.com/reservations?
-                    dueDateGreaterThan=${midnightDaySelected.getDate()}
-                    &dueDateLessThan=${midnightDayAfterSelected.getDate()}
-`;*/
-/*const EasyRentURL = `https://easyrent-api-dev.cit362.com/reservations?
-                    dueDateGreaterThan=${midnightDaySelected.getDate()}
-                    &dueDateLessThan=${midnightDayAfterSelected.getDate()}`*/
 
-const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
+
 function ReservationList(props) {
 
   const { filter, setSuggestions } = props;
@@ -105,18 +95,19 @@ function ReservationList(props) {
     tomorrowDate.setHours(0, 0, 0, 0);
 
     if (show === 'today') {
-      // const dueDateGreaterThan = todayDate.valueOf();
+      const dueDateGreaterThan = todayDate.valueOf();
       const dueDateLessThan = tomorrowDate.valueOf();
 
       return {
-        // dueDateGreaterThan,
+        dueDateGreaterThan,
         dueDateLessThan
       };
     } else if (show === 'past') {
       const dueDateLessThan = todayCurrent.valueOf();
+
       return { dueDateLessThan };
     } else {
-      const dueDateGreaterThan = tomorrowDate.valueOf();
+      const dueDateGreaterThan = todayDate.valueOf();
       return { dueDateGreaterThan }
     }
   };

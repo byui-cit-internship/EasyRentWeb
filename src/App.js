@@ -111,7 +111,7 @@ function App(props) {
       </Grid>
       </Grid>
       
-      {!filter &&  switchToggle && <>
+      {!filter &&  switchToggle &&<>
         <div className="Dropdown">
           <DropdownButton title={dropdownSelected} onSelect={handleChange}>
             <DropdownItem eventKey="Past Due">Past Due</DropdownItem>

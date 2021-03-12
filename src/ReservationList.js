@@ -4,25 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Button from 'react-bootstrap/Button';
 import { HourglassFullTwoTone } from '@material-ui/icons';
 
-const getURL = (range = {}) => {
-  const baseURL = 'https://easyrent-api-dev.cit362.com/reservations';
-  let url = baseURL;
-  if (Object.keys(range).length) {
-    const params = Object.entries(range).map(([key, value]) => `${key}=${value}`).join('&')
-    url += '?' + params;
-  }
-  return url;
-};
-/*`
-dueDateGreaterThan
-dueDateLessThan
-https://easyrent-api-dev.cit362.com/reservations?
-                    dueDateGreaterThan=${midnightDaySelected.getDate()}
-                    &dueDateLessThan=${midnightDayAfterSelected.getDate()}
-`;*/
-/*const EasyRentURL = `https://easyrent-api-dev.cit362.com/reservations?
-                    dueDateGreaterThan=${midnightDaySelected.getDate()}
-                    &dueDateLessThan=${midnightDayAfterSelected.getDate()}`*/
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 function ReservationList(props) {
@@ -57,7 +38,7 @@ function ReservationList(props) {
     let midnightDayAfterSelected = new Date(daySelected.getDate() + 1);
     midnightDayAfterSelected.setHours(0, 0, 0, 0);
 
-    fetch(getURL())
+    fetch(EasyRentURL)
       .then(res => res.json())
       .then(
         (result) => {
@@ -75,7 +56,7 @@ function ReservationList(props) {
  
   console.log('toggleone', toggle)
 
-  useEffect(getItems, []);
+  useEffect(getItems, [])
   useEffect(() => {
     if (!searchResults.length) return;
 
@@ -104,15 +85,19 @@ function ReservationList(props) {
     tomorrowDate.setHours(0, 0, 0, 0);
 
     return ({ dueDate }) => {
+      console.log("Datedue", startDateInMS)
+      console.log("DateDue", dueDate)
+      console.log("DateDu", tomorrowDate)
       return show === 'today'
         ? dueDate > todayDate && dueDate < tomorrowDate || dueDate < todayDate
         : show === 'past' 
-          ? dueDate < todayCurrent
+          ? dueDate < todayDate || dueDate < todayCurrent
           : dueDate > tomorrowDate 
-          // : dueDate >= todayCurrent 
     };
+    
   }
   
+
   const filterBySearch = () => {
     const regExp = new RegExp(filter, 'i');
 
@@ -146,7 +131,7 @@ function ReservationList(props) {
       reservationItems
     };
 
-    fetch(getURL(), {
+    fetch(EasyRentURL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -267,7 +252,7 @@ function ReservationList(props) {
                   <div className="Reservations" key={item.Id} >
                     <Grid xs={3} item>
                       <div className="CustomerName">
-                        {item.dueDate}
+                        {item.customerName}
                         {/* {new Date(item.dueDate).toString()} */}
                       </div>
                     </Grid>

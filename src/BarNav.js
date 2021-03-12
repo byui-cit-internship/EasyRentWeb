@@ -171,7 +171,7 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
                   <SearchIcon />
                 </div>
 
-                <InputBase className="placeholder"
+                <InputBase className="placeholder"  
                   placeholder="Search…"
                   classes={{
                     root: classes.inputRoot,
@@ -189,14 +189,14 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
 
                 {showAutoComplete && (
                   <>
-                    <div style={{ cursor: 'pointer' }} >
+                    <div style={{ cursor: 'pointer', zIndex: 999, position: 'fixed', width: 288 }} > 
                       {suggestions.map(suggestion => (
                         <div onClick={() => {
                           inputRef.current.firstElementChild.value = suggestion;
                           setFilter(suggestion);
                         }}>
 
-                          <div className="auto-complete">
+                          <div className="auto-complete" style={{zIndex: 999}}>
                             {suggestion}
                           </div>
 
