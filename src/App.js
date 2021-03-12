@@ -11,7 +11,8 @@ import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import Grid from "@material-ui/core/Grid";
-
+//my added stuff
+import Login from './Login.js'
 
 const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
@@ -33,7 +34,7 @@ function App() {
   const [show, setShow] = useState('today');
   const [filter, setFilter] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  
+
   const [switchToggle, setSwitchToggle] = useState(true);
 
   const toggleChecked = () => {
@@ -61,40 +62,42 @@ function App() {
         break;
     }
   };
-  console.log('switch', switchToggle) 
- 
+  console.log('switch', switchToggle)
+
   return (
-    
+
     <div className="App">
-      
+
       <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
-    
-     <h1 className="TitleReservations1" variant="h1" Wrap>
+
+      <h1 className="TitleReservations1" variant="h1" Wrap>
         OUTDOOR RESOURCE CENTER
         </h1>
-        <Grid alignItems="center" container>
-          <Grid xs={3} sm={3} alignItems="center" item></Grid>
-          <Grid xs={6} sm={6} alignItems="center" item>
-      <h1 className="TitleReservations" variant="h1" Wrap>
-        Returns by Due Date
+      <Grid alignItems="center" container>
+        <Grid xs={3} sm={3} alignItems="center" item></Grid>
+        <Grid xs={6} sm={6} alignItems="center" item>
+          <h1 className="TitleReservations" variant="h1" Wrap>
+            Returns by Due Date
         </h1>
         </Grid>
         <Grid xs={3} sm={3} alignItems="center" item>
-      <div >
-          <BootstrapSwitchButton 
-          checked={switchToggle} 
-          onChange={toggleChecked}
-          width={110} 
-          onlabel={'Outside'}
-          offlabel={'Inside'}
-          offstyle={'outline-secondary'}
-          
-        />
-      </div>
+          <div >
+
+            <Login />
+            <BootstrapSwitchButton
+              checked={switchToggle}
+              onChange={toggleChecked}
+              width={110}
+              onlabel={'Outside'}
+              offlabel={'Inside'}
+              offstyle={'outline-secondary'}
+
+            />
+          </div>
+        </Grid>
       </Grid>
-      </Grid>
-      
-      {!filter &&  switchToggle  && <>
+
+      {!filter && switchToggle && <>
         <div className="Dropdown">
           <DropdownButton title={dropdownSelected} onSelect={handleChange}>
             <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
@@ -116,7 +119,7 @@ function App() {
           />
         </div>
       </>}
-     
+
       <div >
         <ReservationList
           setSuggestions={setSuggestions}
@@ -131,10 +134,11 @@ function App() {
       </div>
 
       <Footer />
+
     </div>
   )
-  
-  
+
+
 }
 
 
