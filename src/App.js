@@ -37,6 +37,12 @@ function App() {
 
   const [switchToggle, setSwitchToggle] = useState(true);
 
+  //added stuff
+  // const [isSignedInn, setIsSignedIn] = useState(false);
+  // const loginChecked = () => {
+  //   setIsSignedIn(!isSignedInn);
+  // }
+
   const toggleChecked = () => {
     setSwitchToggle(!switchToggle);
   }
@@ -62,83 +68,109 @@ function App() {
         break;
     }
   };
-  console.log('switch', switchToggle)
+  console.log('switch', switchToggle);
+  console.log("this is app auth");
 
-  return (
 
-    <div className="App">
 
-      <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
+  if (false) {
 
-      <h1 className="TitleReservations1" variant="h1" Wrap>
-        OUTDOOR RESOURCE CENTER
+
+    return (
+
+      <div className="App">
+
+        <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
+
+        <h1 className="TitleReservations1" variant="h1" Wrap>
+          OUTDOOR RESOURCE CENTER
         </h1>
-      <Grid alignItems="center" container>
-        <Grid xs={3} sm={3} alignItems="center" item></Grid>
-        <Grid xs={6} sm={6} alignItems="center" item>
-          <h1 className="TitleReservations" variant="h1" Wrap>
-            Returns by Due Date
-        </h1>
+        <Grid alignItems="center" container>
+          <Grid xs={3} sm={3} alignItems="center" item></Grid>
+          <Grid xs={6} sm={6} alignItems="center" item>
+            <h1 className="TitleReservations" variant="h1" Wrap>
+              Returns by Due Date
+            </h1>
+          </Grid>
+          <Grid xs={3} sm={3} alignItems="center" item>
+            <div >
+
+
+              <BootstrapSwitchButton
+                checked={switchToggle}
+                onChange={toggleChecked}
+                width={110}
+                onlabel={'Outside'}
+                offlabel={'Inside'}
+                offstyle={'outline-secondary'}
+
+              />
+            </div>
+          </Grid>
         </Grid>
-        <Grid xs={3} sm={3} alignItems="center" item>
-          <div >
 
-            <Login />
-            <BootstrapSwitchButton
-              checked={switchToggle}
-              onChange={toggleChecked}
-              width={110}
-              onlabel={'Outside'}
-              offlabel={'Inside'}
-              offstyle={'outline-secondary'}
+        {!filter && switchToggle && <>
+          <div className="Dropdown">
+            <DropdownButton title={dropdownSelected} onSelect={handleChange}>
+              <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
+              <DropdownItem eventKey="Today">Today</DropdownItem>
+              <DropdownItem eventKey="Future">Future</DropdownItem>
+            </DropdownButton>
+          </div>
 
+          <div className="DPk">
+            <DatePicker className="datePicker"
+              selected={daySelected.valueOf() !== today.valueOf()
+                ? daySelected
+                : daySelected
+              }
+              onChange={date => setDaySelected(date)}
+
+              popperPlacement="bottom"
+              dateFormat="MMMM d, yyyy"
             />
           </div>
-        </Grid>
-      </Grid>
+        </>}
 
-      {!filter && switchToggle && <>
-        <div className="Dropdown">
-          <DropdownButton title={dropdownSelected} onSelect={handleChange}>
-            <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
-            <DropdownItem eventKey="Today">Today</DropdownItem>
-            <DropdownItem eventKey="Future">Future</DropdownItem>
-          </DropdownButton>
-        </div>
-
-        <div className="DPk">
-          <DatePicker className="datePicker"
-            selected={daySelected.valueOf() !== today.valueOf()
-              ? daySelected
-              : daySelected
-            }
-            onChange={date => setDaySelected(date)}
-
-            popperPlacement="bottom"
-            dateFormat="MMMM d, yyyy"
+        <div >
+          <ReservationList
+            setSuggestions={setSuggestions}
+            filter={filter}
+            show={show}
+            daySelected={daySelected}
+            toggle={({
+              true: 'returned',
+              false: 'recorded'
+            })[switchToggle]}
           />
         </div>
-      </>}
 
-      <div >
-        <ReservationList
-          setSuggestions={setSuggestions}
-          filter={filter}
-          show={show}
-          daySelected={daySelected}
-          toggle={({
-            true: 'returned',
-            false: 'recorded'
-          })[switchToggle]}
-        />
+        <Footer />
+
       </div>
+    )
 
-      <Footer />
+  }
+  else {
+    return (
+      <div className="App">
 
-    </div>
-  )
+        <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter} />
 
+        <h1 className="TitleReservations1" variant="h1" Wrap>
+          OUTDOOR RESOURCE CENTER
+        </h1>
+        <Grid alignItems="center" container>
+          <Grid xs={3} sm={3} alignItems="center" item></Grid>
+          <Login />
 
+        </Grid>
+        <Footer />
+
+      </div>
+    )
+
+  }
 }
 
 
