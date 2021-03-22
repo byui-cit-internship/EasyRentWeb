@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 const GreenCheckbox = withStyles({
   root: {

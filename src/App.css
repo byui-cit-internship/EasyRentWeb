@@ -33,7 +33,7 @@
 
 .TitleReservations {
   margin-top: 10px;
-  margin-bottom: 1px;
+  margin-bottom: 10px;
   font-family: 'Montserrat', sans-serif;
   justify-content: space-around;
   color: #2e8bfc;
@@ -108,7 +108,7 @@ font-size: 23px;
 height: 40px;
 width: 247px;
 align-content: center;
-margin-bottom: -10px;
+margin-bottom: -50px;
 font-family: 'Montserrat', sans-serif;
 font-weight:lighter;
 align-items: center;
@@ -148,7 +148,7 @@ color:#f9f9fa;
 .Dropdown{
   height: 35px;
   width: 247px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
   font-family: 'Montserrat', sans-serif;
   border-radius: 4px;
@@ -320,7 +320,17 @@ color:#f9f9fa;
 .switchButton{
 margin-left: 100px;
 }
-
+.inputCheckbox[type=checkbox][disabled]{
+  background: red;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 12px;
+  width: 12px;
+}
+.ProgressBar{
+  margin-top: 04px;
+  margin-bottom: -10px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -9,9 +8,7 @@ import logo from './BYUI.png';
 import Sun from './Sun';
 import Mountain from './Mountain.png'
 import Grid from "@material-ui/core/Grid";
-import ListGroup from 'react-bootstrap/ListGroup'
-import { List } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+
 
 const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
 const useStyles = makeStyles((theme) => ({
@@ -103,7 +100,7 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
   const [search, setSearch] = useState('');
   const inputRef = useRef();
 
-  useEffect(() => {
+  useEffect(async () => {
     fetch(EasyRentURL)
       .then(res => res.json())
       .then(
@@ -116,6 +113,12 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
           setError(error);
         }
       )
+
+    /*   
+    const res = await fetch(EasyRentURL)
+    const result = await res.json()
+    setIsLoaded(true);
+    setAllItems(result);*/
   }, []);
 
   const clearSearch = () => {
@@ -134,72 +137,52 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
     suggestions.length === 1 && suggestions[0] === filter
   );
 
-  // const showClose = showAutoComplete || search;
   const showClose = Boolean(search);
 
   return (
     <div className={classes.root}>
-
       <AppBar style={{ margin: 0, backgroundColor: "#006EB6" }} position="static,">
-
         <Toolbar>
           <Grid container >
             <Grid xs={1} item className="">
               <img src={logo} className="App-logo" alt="logo" />
             </Grid>
-
-          
-              {/* <title className={classes.title} variant="h6" Wrap>
-                OUTDOOR RESOURCE CENTER
-              </title>
-              <subtitle className={classes.subtitle} variasnt="h6" Wrap>
-                BYU-Idaho
-              </subtitle> */}
-    
-
             <Grid xs={10}  item>
-              <Grid container justify={"center"}>
-                <div className="sun"><Sun /></div>
-                {<img src={Mountain} className="mountain" />}
-              </Grid>
+            <Grid container justify={"center"}>
+              <div className="sun"><Sun /></div>
+              {<img src={Mountain} className="mountain" />}
             </Grid>
-
+            </Grid>
             <Grid xs={1} spacing={0} item>
-
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
                 </div>
-
                 <InputBase className="placeholder"  
                   placeholder="Search…"
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-
                   inputProps={{ 'Montserrat': 'search' }}
                   onChange={onInputChange}
                   ref={inputRef}
                 />
-                
                 {showClose &&
                   <div onClick={clearSearch} className="close-auto-complete"></div>
                 }
 
                 {showAutoComplete && (
                   <>
-                    <div style={{ cursor: 'pointer', zIndex: 999, position: 'fixed', width: 288 }} > 
+                    <div style={{ cursor: 'pointer', zIndex: 999, position: 'absolute', width: 288 }} > 
                       {suggestions.map(suggestion => (
                         <div onClick={() => {
                           inputRef.current.firstElementChild.value = suggestion;
                           setFilter(suggestion);
                         }}>
-
                           <div className="auto-complete" style={{zIndex: 999}}>
                             {suggestion}
                           </div>
-
                         </div>
                       ))}
                     </div>
