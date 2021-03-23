@@ -1,6 +1,6 @@
-const getApiRoot = () => {
+export const getApiRoot = () => {
     const hashTag = window.location.hash;
-    console.log('Hash tag '+hashTag);
+    console.log('Hash tag '+ hashTag);
 
     let apiRoot = hashTag === '#local' ? 'http://localhost:4567' : 'https://easyrent-api-dev.cit362.com';
 
@@ -11,8 +11,5 @@ const getApiRoot = () => {
     } else if (window.location.hostname.includes('easyrent.citwdd.net')){
         apiRoot = 'https://easyrent-api-prod.cit362.com';
     }
-
     return apiRoot;
 }
-
-export {getApiRoot}

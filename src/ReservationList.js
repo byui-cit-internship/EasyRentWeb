@@ -2,14 +2,19 @@ import React, { useState, TouchableOpacity, useEffect, useRef } from 'react';
 import MyVerticallyCenteredModal from './components/Modal';
 import Grid from "@material-ui/core/Grid";
 import Button from 'react-bootstrap/Button';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import updateReservations from './services/updateReservations';
 import getItems from './services/getItems';
 import getDays from './services/getDays';
 import { filterByReturned, filterBySearch, filterRepeated } from './services/filters';
+import { getApiRoot } from './utils/UrlLogic';
+
+console.log(`API Root: ${getApiRoot()}`);
+
+const EasyRentURL = `${getApiRoot()}/reservations`;
 
 function ReservationList(props) {
-  
+
   const { filter, setSuggestions } = props;
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -85,7 +90,7 @@ function ReservationList(props) {
         <div style={{ overflow: 'auto', height: 'inherit', padding: '0 10px' }}>
           {items
             .map(item => {
-
+              
               const validReturn = item.dueDate <= tomorrow;
               const currentDate = new Date();
               const dateToday = currentDate.getDay();
