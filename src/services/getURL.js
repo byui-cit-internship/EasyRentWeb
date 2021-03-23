@@ -1,4 +1,4 @@
-import { getApiRoot } from './utils/UrlLogic.js';
+import { getApiRoot } from '../utils/UrlLogic.js';
 
 export default (range = {}) => {
   const basURL = `${getApiRoot()}/reservations`;
