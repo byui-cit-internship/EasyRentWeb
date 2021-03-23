@@ -7,10 +7,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from './BYUI.png';
 import Sun from './Sun';
 import Mountain from './Mountain.png'
+import { getApiRoot } from './utils/UrlLogic.js';
 import Grid from "@material-ui/core/Grid";
 
 
-const EasyRentURL = 'https://easyrent-api-dev.cit362.com/reservations'
+const EasyRentURL = `${getApiRoot()}/reservations`;
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
