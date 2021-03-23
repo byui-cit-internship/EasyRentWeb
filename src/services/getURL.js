@@ -1,5 +1,7 @@
+import { getApiRoot } from './utils/UrlLogic.js';
+
 export default (range = {}) => {
-  const baseURL = 'https://easyrent-api-dev.cit362.com/reservations';
+  const basURL = `${getApiRoot()}/reservations`;
   let url = baseURL;
   if (Object.keys(range).length) {
     const params = Object.entries(range).map(([key, value]) => `${key}=${value}`).join('&')

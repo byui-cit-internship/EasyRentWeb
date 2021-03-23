@@ -1,5 +1,6 @@
 import React, { useState, TouchableOpacity, useEffect, useRef } from 'react';
 import MyVerticallyCenteredModal from './components/Modal';
+import { getApiRoot } from './utils/UrlLogic.js';
 import Grid from "@material-ui/core/Grid";
 import Button from 'react-bootstrap/Button';
 import ProgressBar from 'react-bootstrap/ProgressBar'
@@ -8,6 +9,9 @@ import getItems from './services/getItems';
 import getDays from './services/getDays';
 import { filterByReturned, filterBySearch, filterRepeated } from './services/filters';
 
+console.log(`API Root: ${getApiRoot()}`);
+
+const EasyRentURL = `${getApiRoot()}/reservations`;
 function ReservationList(props) {
   const { filter, setSuggestions } = props;
   const [error, setError] = useState(null);
