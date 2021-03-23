@@ -7,11 +7,6 @@ import updateReservations from './services/updateReservations';
 import getItems from './services/getItems';
 import getDays from './services/getDays';
 import { filterByReturned, filterBySearch, filterRepeated } from './services/filters';
-import { getApiRoot } from './utils/UrlLogic';
-
-console.log(`API Root: ${getApiRoot()}`);
-
-const EasyRentURL = `${getApiRoot()}/reservations`;
 
 function ReservationList(props) {
 
@@ -156,8 +151,8 @@ function ReservationList(props) {
                   <div className="Reservations" key={item.Id} >
                     <Grid xs={11} item>
                       <div className="CustomerName"  >
-                        {/* {item.customerName} */}
-                        {new Date(item.dueDate).toString()}
+                        {item.customerName}
+                        {/* {new Date(item.dueDate).toString()} */}
                       </div>
                     </Grid>
                     <Grid xs={9} item>
