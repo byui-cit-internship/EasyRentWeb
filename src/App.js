@@ -90,7 +90,7 @@ function App(props) {
           <Grid xs={3} sm={3} alignItems="center" item />
           <Grid xs={6} sm={6} alignItems="center" item>
             <h1 className={"TitleReservations"} variant="h1"
-              style={{ color: !switchToggle ? '#252222' : '' }}>
+              style={{ color: !switchToggle ? '#343a40' : '' }}>
               Returns by Due Date
             </h1>
           </Grid>

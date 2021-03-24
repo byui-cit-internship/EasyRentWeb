@@ -9,9 +9,19 @@ import { withStyles } from '@material-ui/core/styles';
 
 const GreenCheckbox = withStyles({
   root: {
-    color: '#252222',
+    color: '#017bff',
     '&$checked': {
-      color: '#252222',
+      color: '#017bff',
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
+
+const BlackCheckbox = withStyles({
+  root: {
+    color: '#343a40',
+    '&$checked': {
+      color: '#343a40',
     },
   },
   checked: {},
@@ -53,15 +63,6 @@ export default function MyVerticallyCenteredModal(props) {
     props.reservationItems.map(item => {
       update[item.uniqueItemId] = checked;
     })
-    /*if (event.target.checked) {
-      props.reservationItems.map(item => {
-        update[item.uniqueItemId] = true;
-      })
-    } else {
-      props.reservationItems.map(item => {
-        update[item.uniqueItemId] = false;
-      })
-    }*/
     setCheckboxState(update)
     setCheckedAll(checked);
   }
@@ -82,6 +83,14 @@ export default function MyVerticallyCenteredModal(props) {
     props.onHide();
     props.onSubmit(props.reservation, reservationItems);
   }
+  const checkboxLabel = () => {
+    if (toggle === 'returned' && validReturn){
+      return "Check / Uncheck All"
+    } else if 
+      (toggle === 'returned' && !validReturn){
+      return ''
+    } 
+  }
 
   return (
     <Modal
@@ -99,32 +108,27 @@ export default function MyVerticallyCenteredModal(props) {
         <div >
           <div>
             <FormControlLabel
-
-              control={toggle === 'recorded' ?
-                <Checkbox style={{ color: '#dc3545' }}
-                  disabled
-                  color="secondary"
-                  onChange={onCheckAll}
-                  checked={checkedAll}
-                /> :
+              control={toggle === 'returned' && validReturn ?
                 <GreenCheckbox
                   disabled={!validReturn}
                   onChange={onCheckAll}
                   checked={checkedAll}
-                />
+                /> :
+                <></> 
               }
-              label="Check / Uncheck All"
+              label={checkboxLabel()}
             />
-            <Divider />
+            
+            {toggle === 'returned' && validReturn ? <Divider /> : <></>}
+
           </div>
           {
             props.reservationItems.map(item => (
               <div>
                 <FormControlLabel
                   control={toggle === 'recorded' ?
-                    <Checkbox style={{ color: '#dc3545' }}
+                    <BlackCheckbox 
                       disabled
-                      color="secondary"
                       checked={checkboxState[item.uniqueItemId]}
                       onChange={handleChange.bind(null, item.uniqueItemId)}
                       name={item.uniqueItemId}
@@ -145,10 +149,12 @@ export default function MyVerticallyCenteredModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <div>
-          <Button className="ReturnButton"
+          <Button 
+            disabled={!validReturn}
+            className="ReturnButton"
             style={{
               width: '90px',
-              backgroundColor: toggle === 'returned' ? "#017bff" : "#E95056",
+              backgroundColor: toggle === 'returned' ? "#017bff" : "#343a40",
               color: "white"
             }}
             onClick={submitAndClose}>
