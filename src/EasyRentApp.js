@@ -1,4 +1,4 @@
-import React, {useState, TouchableOpacity, useEffect} from 'react';
+import React, { useState, TouchableOpacity, useEffect } from 'react';
 import App from './App.css';
 import Button from '@material-ui/core/Button';
 import { FormatColorFill } from '@material-ui/icons';
@@ -20,15 +20,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
-const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations"; 
+const EasyRentURL = "https://easyrent-api-dev.cit362.com/reservations";
 
 function MyVerticallyCenteredModal(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   // const [reservationItems, setReservationItems] = useState(props.reservationItems);
-  const [reservation, setReservation] = useState(props.reservation || {reservationItems: []});
- 
+  const [reservation, setReservation] = useState(props.reservation || { reservationItems: [] });
+
   // let options = [];
   // const { reservationItems = []}  = props;
   // options = reservationItems.map(item =>({label: item.description, value: item.description}))
@@ -37,6 +37,7 @@ function MyVerticallyCenteredModal(props) {
   // //   { label: 'Thing 2', value: 2},
   // // ];
   // console.log(options)
+
   return (
     <Modal
       {...props}
@@ -45,46 +46,46 @@ function MyVerticallyCenteredModal(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title  id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter">
           Reservation Items
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div >
-         
-              {/* {props.reservation.reservationItems.map((itemsR, i) => (
+
+          {/* {props.reservation.reservationItems.map((itemsR, i) => (
                 <p key={i} >
                   {itemsR.description}
                 </p>
               
               ))}
                */}
-               {
-                 props.reservation.reservationItems.map(item => (
-                    <div>
-                      <FormControlLabel
-                      id={item.description} 
-                      control={<Checkbox style={{ color:'primary'}}  />}
-                      label={item.description}
-                  />
-                  </div>
-                 ))
-                 }
-               
-               {/* <Select options={options} 
+          {
+            props.reservation.reservationItems.map(item => (
+              <div>
+                <FormControlLabel
+                  id={item.description}
+                  control={<Checkbox style={{ color: 'primary' }} />}
+                  label={`${item.description}${invalidReturn ? ' - disabled' : ''}`}
+                />
+              </div>
+            ))
+          }
+
+          {/* <Select options={options} 
                isMulti /> */}
-               {/* <ReactMultiSelectCheckboxes options={options} /> */}
-               
-               {/* {JSON.stringify(props.reservation)} */}
-               
-            
+          {/* <ReactMultiSelectCheckboxes options={options} /> */}
+
+          {/* {JSON.stringify(props.reservation)} */}
+
+
         </div>
       </Modal.Body>
       <Modal.Footer>
         <div>
-        <Button className="ReturnButton"
-          style={{ color: "white", background: "#80C140", width: '90px'}} onClick={props.onHide}><Text>Return</Text>
-        </Button>
+          <Button className="ReturnButton"
+            style={{ color: "white", background: "#80C140", width: '90px' }} onClick={props.onHide}><Text>Return</Text>
+          </Button>
         </div>
       </Modal.Footer>
     </Modal>
@@ -92,22 +93,22 @@ function MyVerticallyCenteredModal(props) {
 }
 
 function ReservationList(props) {
-  
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
-    const [modalShow, setModalShow] = React.useState(false);
-    const [reservation, setReservation] = useState({});
-    
-    
-    useEffect(() => {
-        fetch(EasyRentURL)
-        .then(res => res.json())
-        .then(
-            (result) => {
-            setIsLoaded(true);
-            setItems(result);
-            },
+
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const [modalShow, setModalShow] = React.useState(false);
+  const [reservation, setReservation] = useState({});
+
+
+  useEffect(() => {
+    fetch(EasyRentURL)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItems(result);
+        },
         (error) => {
           setIsLoaded(true);
           setError(error);
@@ -122,40 +123,40 @@ function ReservationList(props) {
     return (
       <>
         <div >
-        {items.map(item => (
-          <li className="Reservations" key={item.id}>
-            <div className="Customer" >
-              <Text>Customer:&nbsp;</Text>  
-            </div>
-                
-            <div className="CustomerName">
-              {item.customerName} 
-            </div>
-                
-            <div className="Button">
+          {items.map(item => (
+            <li className="Reservations" key={item.id}>
+              <div className="Customer" >
+                <Text>Customer:&nbsp;</Text>
+              </div>
 
-              <Button style={{ FormatColorFill:"#006EB6"}} variant="contained"  onClick={() => { 
-                setReservation(item);
-                setModalShow(true);
-                // <Text>{selectedReservation.reservationItems}</Text> 
-                console.log(JSON.stringify(item))
+              <div className="CustomerName">
+                {item.customerName}
+              </div>
+
+              <div className="Button">
+
+                <Button style={{ FormatColorFill: "#006EB6" }} variant="contained" onClick={() => {
+                  setReservation(item);
+                  setModalShow(true);
+                  // <Text>{selectedReservation.reservationItems}</Text> 
+                  console.log(JSON.stringify(item))
                 }}
-                
-              >
-                Check Reservations Items
+
+                >
+                  Check Reservations Items
               </Button>
-                  
-              <MyVerticallyCenteredModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                reservation={reservation}
-                reservationItems={reservation.reservationItems}
-              />
-            </div>
-          </li>
-        ))}
-      </div >
-    </>
+
+                <MyVerticallyCenteredModal
+                  show={modalShow}
+                  onHide={() => setModalShow(false)}
+                  reservation={reservation}
+                  reservationItems={reservation.reservationItems}
+                />
+              </div>
+            </li>
+          ))}
+        </div >
+      </>
     );
   }
 }

@@ -10,6 +10,7 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from './Footer';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import Grid from "@material-ui/core/Grid";
+import Context from './services/context';
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -18,16 +19,16 @@ const future = new Date(today);
 pastDue.setDate(today.getDate() - 1);
 future.setDate(today.getDate() + 1);
 const midnightToday = new Date();
-midnightToday.setHours(0,0,0,0);
+midnightToday.setHours(0, 0, 0, 0);
 const midnightYesterday = new Date();
 midnightYesterday.setDate(midnightToday.getDate() - 1);
-midnightYesterday.setHours(0,0,0,0);
+midnightYesterday.setHours(0, 0, 0, 0);
 const midnightTomorrow = new Date();
 midnightTomorrow.setDate(midnightTomorrow.getDate() + 1);
-midnightTomorrow.setHours(0,0,0,0);
+midnightTomorrow.setHours(0, 0, 0, 0);
 
 function App(props) {
-  
+
   const [startDate, setStartDate] = useState(new Date());
   const [dropdownSelected, setDropDownSelected] = useState('Today');
   const [daySelected, setDaySelected] = useState(today);
@@ -36,11 +37,11 @@ function App(props) {
   const [filter, setFilter] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [switchToggle, setSwitchToggle] = useState(true);
-  
+
   const toggleChecked = () => {
     setSwitchToggle(!switchToggle);
   }
-  
+
   function handleChange(e) {
     console.log("The title is =====", e);
     setDropDownSelected(e);
@@ -63,72 +64,84 @@ function App(props) {
     }
   };
 
+  const toggle = ({
+    true: 'returned',
+    false: 'recorded'
+  })[switchToggle];
+
+  // const togle = switchToggle ? 'returned' : 'recorded';
+  const context = {
+    toggle,
+    suggestions,
+    filter,
+    setFilter
+  };
+
   return (
-    
-    <div className="App">
-      
-      <BarNav filter={filter} suggestions={suggestions} setFilter={setFilter}/>
-        <h1 className="TitleReservations1" variant="h1" Wrap>
+    <Context.Provider value={context}>
+      <div className="App">
+
+        <BarNav />
+
+        <h1 className={toggle === 'recorded' ? "TitleReservations1" : "TitleReservations2"} variant="h1" Wrap>
           OUTDOOR RESOURCE CENTER
         </h1>
         <Grid alignItems="center" container>
-          <Grid xs={3} sm={3} alignItems="center" item/>
+          <Grid xs={3} sm={3} alignItems="center" item />
           <Grid xs={6} sm={6} alignItems="center" item>
             <h1 className={"TitleReservations"} variant="h1"
-              style={{ color: !switchToggle ? '#dc3545' : '' }}>
+              style={{ color: !switchToggle ? '#252222' : '' }}>
               Returns by Due Date
             </h1>
           </Grid>
           <Grid xs={3} sm={3} alignItems="center" item>
-          <div>
-          <BootstrapSwitchButton
-            checked={switchToggle} 
-            onChange={toggleChecked}
-            width={110} 
-            onlabel={'Outside'}
-            offlabel={'Inside'}
-            offstyle={'danger'}
-          />
-          </div>
+            <div>
+              <BootstrapSwitchButton
+                checked={switchToggle}
+                onChange={toggleChecked}
+                width={110}
+                onlabel={'Outside'}
+                offlabel={'Inside'}
+                offstyle={'dark'}
+              />
+            </div>
           </Grid>
-      </Grid>
-      
-      {!filter && switchToggle && <>
-        <div className="Dropdown">
-          <DropdownButton title={dropdownSelected} onSelect={handleChange}>
-            <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
-            <DropdownItem eventKey="Today">Today</DropdownItem>
-            <DropdownItem eventKey="Future">Future</DropdownItem>
-          </DropdownButton>
-        </div>
-        <div className="DPk">
-          <DatePicker className="datePicker"
-            selected={daySelected.valueOf() 
-              !== today.valueOf()
-              ? daySelected
-              : daySelected
-            }
-            onChange={date => setDaySelected(date)}
-            popperPlacement="bottom"
-            dateFormat="MMMM d, yyyy"
+        </Grid>
+
+        {!filter && switchToggle && <>
+          <div className="Dropdown">
+            <DropdownButton title={dropdownSelected} onSelect={handleChange}>
+              <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
+              <DropdownItem eventKey="Today">Today</DropdownItem>
+              <DropdownItem eventKey="Future">Future</DropdownItem>
+            </DropdownButton>
+          </div>
+          <div className="DPk">
+            <DatePicker className="datePicker"
+              selected={daySelected.valueOf()
+                !== today.valueOf()
+                ? daySelected
+                : daySelected
+              }
+              onChange={date => setDaySelected(date)}
+              popperPlacement="bottom"
+              dateFormat="MMMM d, yyyy"
+            />
+          </div>
+        </>
+        }
+        <div>
+          <ReservationList
+            setSuggestions={setSuggestions}
+            filter={filter}
+            show={show}
+            daySelected={daySelected}
+            toggle={toggle}
           />
         </div>
-      </>
-      }
-      <div>
-        <ReservationList
-          setSuggestions={setSuggestions}
-          filter={filter}
-          show={show}
-          daySelected={daySelected}
-          toggle={({
-            true: 'returned',
-            false: 'recorded'
-          })[switchToggle]}
-        />
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Context.Provider>
   )
 }
 

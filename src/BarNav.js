@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
@@ -9,7 +9,11 @@ import Sun from './Sun';
 import Mountain from './Mountain.png'
 import { getApiRoot } from './utils/UrlLogic.js';
 import Grid from "@material-ui/core/Grid";
+import App from './App';
+import Context from './services/context';
 
+/*useContext
+React.useContext*/
 
 const EasyRentURL = `${getApiRoot()}/reservations`;
 const useStyles = makeStyles((theme) => ({
@@ -93,13 +97,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SearchAppBar({ filter, setFilter, suggestions }) {
+export default function SearchAppBar() {
   const classes = useStyles();
   const [isLoaded, setIsLoaded] = useState(false);
   const [Allitems, setAllItems] = useState([]);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const inputRef = useRef();
+  const { toggle, suggestions, filter, setFilter } = useContext(Context);
 
   useEffect(async () => {
     fetch(EasyRentURL)
@@ -139,10 +144,17 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
   );
 
   const showClose = Boolean(search);
+  
+  const background = toggle === 'recorded' ? "#282626" :"#006EB6" ;
+
+  const styles = {
+    margin: 0,
+    background 
+  };
 
   return (
     <div className={classes.root}>
-      <AppBar style={{ margin: 0, backgroundColor: "#006EB6" }} position="static,">
+      <AppBar position="static" style={styles}>
         <Toolbar>
           <Grid container >
             <Grid xs={1} item className="">
@@ -175,7 +187,12 @@ export default function SearchAppBar({ filter, setFilter, suggestions }) {
 
                 {showAutoComplete && (
                   <>
-                    <div style={{ cursor: 'pointer', zIndex: 999, position: 'absolute', width: 288 }} > 
+                    <div style={{ 
+                      cursor: 'pointer', 
+                      zIndex: 999, 
+                      position: 'absolute', 
+                      width: 288 }} > 
+                      
                       {suggestions.map(suggestion => (
                         <div onClick={() => {
                           inputRef.current.firstElementChild.value = suggestion;

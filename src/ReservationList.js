@@ -49,9 +49,10 @@ function ReservationList(props) {
   }
 
   const returnItem = (item, validReturn) => {
-    if (!validReturn) {
+    /*if (!validReturn) {
       return alert('Unable to return due to possible late fee');
-    }
+    }*/
+    // setReservation({ ...item, validReturn });
     setReservation(item);
     setModalShow(true);
   }
@@ -86,7 +87,7 @@ function ReservationList(props) {
           {items
             .map(item => {
               
-              const validReturn = item.dueDate <= tomorrow;
+              const validReturn = item.dueDate >= today;
               const currentDate = new Date();
               const dateToday = currentDate.getDay();
               const currentTime = new Date();
@@ -152,7 +153,7 @@ function ReservationList(props) {
                     <Grid xs={11} item>
                       <div className="CustomerName"  >
                         {item.customerName}
-                        {/* {new Date(item.dueDate).toString()} */}
+                        {/* {new Date(item.dueDate).toString()}  */}
                       </div>
                     </Grid>
                     <Grid xs={9} item>
@@ -168,7 +169,7 @@ function ReservationList(props) {
                     </Grid>
                     <div>
                       <Button
-                        variant={toggle === 'returned' ? "primary" : "danger"}
+                        variant={toggle === 'returned' ? "primary" : "dark"}
                         onClick={() => returnItem(item, validReturn)}>
                         {toggle === 'returned' ? 'Return' : 'Record'} Items
                         </Button>

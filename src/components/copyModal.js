@@ -10,9 +10,9 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 
 const GreenCheckbox = withStyles({
   root: {
-    color: '#017bff',
+    color: '#252222',
     '&$checked': {
-    color: '#017bff',
+    color: '#252222',
     },
   },
   checked: {},
