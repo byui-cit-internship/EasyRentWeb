@@ -30,7 +30,6 @@ const BlackCheckbox = withStyles({
 export default function MyVerticallyCenteredModal(props) {
   const getCheckboxes = (reservationItems) => reservationItems.reduce(
     (checkboxes, { uniqueItemId, returned, recorded }) => {
-      // checkboxes[uniqueItemId] = toggle === 'returned' ? returned : recorded;
       checkboxes[uniqueItemId] = returned;
       return checkboxes;
     }, {}
@@ -110,7 +109,6 @@ export default function MyVerticallyCenteredModal(props) {
             <FormControlLabel
               control={toggle === 'returned' && validReturn ?
                 <GreenCheckbox
-                  disabled={!validReturn}
                   onChange={onCheckAll}
                   checked={checkedAll}
                 /> :
@@ -126,6 +124,7 @@ export default function MyVerticallyCenteredModal(props) {
             props.reservationItems.map(item => (
               <div>
                 <FormControlLabel
+                  className="reservation-item-label"
                   control={toggle === 'recorded' ?
                     <BlackCheckbox 
                       disabled
@@ -137,7 +136,7 @@ export default function MyVerticallyCenteredModal(props) {
                         disabled={!validReturn}
                         checked={checkboxState[item.uniqueItemId]}
                         onChange={handleChange.bind(null, item.uniqueItemId)}
-                      /> 
+                      />
                   }
                   label={<>{item.description} <strong>{item.itemId}</strong></>}
                 />

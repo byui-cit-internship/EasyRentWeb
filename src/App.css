@@ -5,8 +5,9 @@
 }
 
 .App-logo {
-  height: 75px;
-  margin-top: 3px;
+  height: 70px;
+  margin-top: 6px;
+
 }
 
 .align-left {
@@ -74,10 +75,12 @@
   width: 650px;
   border: 1px solid rgb(175, 172, 172);
   border-radius: 5px;
+  /* background-color:#017bff; */
   display: flex;
   flex-direction:row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
   font-family: 'Montserrat', sans-serif;
   margin-top: 0px;
   margin-bottom: 10px;
@@ -185,21 +188,28 @@ color:#f9f9fa;
   margin-left: 5px;
 }
 
-.status{
-  font-family: 'Montserrat', sans-serif;
-  font-size: 23px;
-  margin-right: 0 auto;
-  padding: 10px 5px;
-}
 .statusReservation{
   font-family: 'Montserrat', sans-serif;
   font-size: 23px;
   margin-left: 0px;
 }
+.status{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 23px;
+  margin-top: -3px;
+  margin-right: 0 auto;
+  padding: 10px 5px;
+}
 .CustomerName{
   font-size: 23px;
   margin-left: 5px;
+  margin-top: -3px;
   padding: 10px 5px;
+}
+.ProgressBar{
+  margin-top: -3px;
+  width: 100%;
+  border-radius: 10;
 }
 
 .SearchBar {
@@ -336,9 +346,16 @@ margin-left: 100px;
   height: 12px;
   width: 12px;
 }
-.ProgressBar{
-  margin-top: 04px;
-  margin-bottom: -10px;
+
+/* Reservation items */
+label.reservation-item-label {
+  display: flex;
+}
+
+.reservation-item-label > span:last-child {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 @keyframes App-logo-spin {
   from {

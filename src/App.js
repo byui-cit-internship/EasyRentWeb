@@ -80,17 +80,20 @@ function App(props) {
   return (
     <Context.Provider value={context}>
       <div className="App">
-
+        
         <BarNav />
 
-        <h1 className={toggle === 'recorded' ? "TitleReservations1" : "TitleReservations2"} variant="h1" Wrap>
+        <h1 
+          className={toggle === 'recorded' ? "TitleReservations1" : "TitleReservations2"} 
+          variant="h1" Wrap
+        >
           OUTDOOR RESOURCE CENTER
         </h1>
         <Grid alignItems="center" container>
           <Grid xs={3} sm={3} alignItems="center" item />
           <Grid xs={6} sm={6} alignItems="center" item>
-            <h1 className={"TitleReservations"} variant="h1"
-              style={{ color: !switchToggle ? '#343a40' : '' }}>
+            {/* style={{ color: !switchToggle ? '#252222' : '' }}> */}
+            <h1 className={"TitleReservations"} variant="h1">
               Returns by Due Date
             </h1>
           </Grid>
@@ -118,7 +121,8 @@ function App(props) {
           </div>
           <div className="DPk">
             <DatePicker className="datePicker"
-              selected={daySelected.valueOf()
+              selected={
+                daySelected.valueOf()
                 !== today.valueOf()
                 ? daySelected
                 : daySelected

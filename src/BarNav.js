@@ -9,7 +9,6 @@ import Sun from './Sun';
 import Mountain from './Mountain.png'
 import { getApiRoot } from './utils/UrlLogic.js';
 import Grid from "@material-ui/core/Grid";
-import App from './App';
 import Context from './services/context';
 
 /*useContext
@@ -49,11 +48,32 @@ const useStyles = makeStyles((theme) => ({
   search: {
 
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+                      
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+                                                
 
     },
+  
+    position: 'absolute',
+    height: 35,
+    width: '20%',
+    right: 15,
+    marginTop: 24,
+
+  },
+  search2: {
+
+    borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.info.main, 0.45),
+                      
+    '&:hover': {
+      backgroundColor: fade(theme.palette.info.main, 0.30)
+                                                
+
+    },
+  
     position: 'absolute',
     height: 35,
     width: '20%',
@@ -119,12 +139,6 @@ export default function SearchAppBar() {
           setError(error);
         }
       )
-
-    /*   
-    const res = await fetch(EasyRentURL)
-    const result = await res.json()
-    setIsLoaded(true);
-    setAllItems(result);*/
   }, []);
 
   const clearSearch = () => {
@@ -167,7 +181,7 @@ export default function SearchAppBar() {
             </Grid>
             </Grid>
             <Grid xs={1} spacing={0} item>
-              <div className={classes.search}>
+              <div className={toggle === 'returned' ? classes.search : classes.search2}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
                 </div>
@@ -182,7 +196,10 @@ export default function SearchAppBar() {
                   ref={inputRef}
                 />
                 {showClose &&
-                  <div onClick={clearSearch} className="close-auto-complete"></div>
+                  <div 
+                    onClick={clearSearch} 
+                    className="close-auto-complete">
+                  </div>
                 }
 
                 {showAutoComplete && (
