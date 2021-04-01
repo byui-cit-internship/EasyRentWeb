@@ -91,7 +91,7 @@ function ReservationList(props) {
           {items
             .map(item => {
 
-              // const validReturn = item.dueDate >= today;
+              // const validReturn = item.dueDate < today;
               const currentDate = new Date();
               const dateToday = currentDate.getDay();
               const currentTime = new Date();
@@ -109,10 +109,10 @@ function ReservationList(props) {
               reservationExtraTimeMon.setDate(reservationExtraTimeMon.getDate() + 1);
 
               const setHourMonday = new Date();
-              setHourMonday.setHours(14, 0, 0, 0);
+              setHourMonday.setHours(10, 0, 0, 0);
 
               const setHourTue_Fri = new Date();
-              setHourTue_Fri.setHours(14, 0, 0, 0);
+              setHourTue_Fri.setHours(11, 0, 0, 0);
 
               const setHourSat = new Date();
               setHourSat.setHours(9, 0, 0, 0);
@@ -136,35 +136,22 @@ function ReservationList(props) {
               console.log('reservationDue ================', reservationDue)
               console.log('reservationExtra', reservationExtra)
               console.log('today', today)
+              console.log('tomorrow', tomorrow)
               console.log('dateToday', dateToday)
               console.log('currentTime', currentTime)
               console.log('setHourMonday', setHourMonday)
               console.log('setHourTue_Fri', setHourTue_Fri)
-              console.log('setHourSat', setHourSat)
+              console.log('setHourSat ====================', setHourSat)
 
-              /*const validReturn = (
-                (reservationDue.valueOf() === today.valueOf())
-                ||
-                ((dateToday === 1
-                  && reservationExtra.valueOf() === today.valueOf()
-                  && currentTime < setHourMonday))
-                ||
-                ((dateToday >= 2 || dateToday <= 5)
-                  && reservationExtra.valueOf() === today.valueOf()
-                  && currentTime < setHourTue_Fri)
-                ||
-                (dateToday === 6
-                  && reservationExtra.valueOf() === today.valueOf()
-                  && currentTime < setHourSat)
-              );*/
 
               const validReturn = (
-                reservationDue.valueOf() === today.valueOf() || (
+                reservationDue.valueOf() >= today.valueOf() || (
                   reservationExtra.valueOf() === today.valueOf() && (
                     dateToday === 1 && currentTime < setHourMonday ||
                     dateToday >= 2 || dateToday <= 5 && currentTime < setHourTue_Fri ||
-                    dateToday === 6 && currentTime < setHourSat
-                ))
+                    dateToday === 6 && currentTime < setHourSat 
+                  )
+                )
               );
 
               console.log('validReturn', validReturn)
@@ -262,7 +249,6 @@ function ReservationList(props) {
 
                 <Grid container>
 
-
                   <div className="Reservations" key={item.Id} >
 
                     <Grid xs={3} item>
@@ -284,7 +270,6 @@ function ReservationList(props) {
 
                     <div className="status" >
                       <Button
-                        // disabled={!validReturn}
                         variant={toggle === 'returned' ? "primary" : "dark"}
                         onClick={() => returnItem(item, validReturn)}>
                         {toggle === 'returned' ? 'Return' : 'Record'} Items
@@ -312,7 +297,6 @@ function ReservationList(props) {
                     />
 
                   </div>
-
 
                 </Grid>
 

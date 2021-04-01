@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 
-const GreenCheckbox = withStyles({
+const BlueCheckbox = withStyles({
   root: {
     color: '#017bff',
     '&$checked': {
@@ -90,7 +90,7 @@ export default function MyVerticallyCenteredModal(props) {
       return ''
     } 
   }
-
+  console.log('validReturnModal', validReturn)
   return (
     <Modal
       {...props}
@@ -108,7 +108,7 @@ export default function MyVerticallyCenteredModal(props) {
           <div>
             <FormControlLabel
               control={toggle === 'returned' && validReturn ?
-                <GreenCheckbox
+                <BlueCheckbox
                   onChange={onCheckAll}
                   checked={checkedAll}
                 /> :
@@ -125,18 +125,18 @@ export default function MyVerticallyCenteredModal(props) {
               <div>
                 <FormControlLabel
                   className="reservation-item-label"
-                  control={toggle === 'recorded' ?
+                  control={toggle === 'returned' ?
+                  <BlueCheckbox
+                        disabled={!validReturn}
+                        checked={checkboxState[item.uniqueItemId]}
+                        onChange={handleChange.bind(null, item.uniqueItemId)}
+                      /> :
                     <BlackCheckbox 
                       disabled
                       checked={checkboxState[item.uniqueItemId]}
                       onChange={handleChange.bind(null, item.uniqueItemId)}
                       name={item.uniqueItemId}
-                    /> :
-                      <GreenCheckbox
-                        disabled={!validReturn}
-                        checked={checkboxState[item.uniqueItemId]}
-                        onChange={handleChange.bind(null, item.uniqueItemId)}
-                      />
+                    />
                   }
                   label={<>{item.description} <strong>{item.itemId}</strong></>}
                 />

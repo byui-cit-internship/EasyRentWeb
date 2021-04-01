@@ -1,13 +1,13 @@
 import getDays from './getDays';
 
 export default ({ show, toggle }) => {
-    const { today, tomorrowTues_Fri } = getDays();
+    const { today, tomorrow } = getDays();
 
     if (toggle === 'recorded') return {};
 
     if (show === 'today') {
         const dueDateGreaterThan = today.valueOf();
-        const dueDateLessThan = tomorrowTues_Fri.valueOf() ;
+        const dueDateLessThan = tomorrow.valueOf();
         return {
             dueDateGreaterThan,
             dueDateLessThan
@@ -16,7 +16,7 @@ export default ({ show, toggle }) => {
         const dueDateLessThan = today.valueOf();
         return { dueDateLessThan };
     } else {
-        const dueDateGreaterThan = tomorrowTues_Fri.valueOf();
+        const dueDateGreaterThan = tomorrow.valueOf();
         return { dueDateGreaterThan }
     }
 };

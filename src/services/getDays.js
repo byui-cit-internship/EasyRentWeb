@@ -2,9 +2,10 @@ export default () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const tomorrowTues_Fri = new Date();
-    tomorrowTues_Fri.setDate(tomorrowTues_Fri.getDate() + 1);
-    tomorrowTues_Fri.setHours(0, 0, 0, 0);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    
 
-    return { today, tomorrowTues_Fri }
+    return { today, tomorrow }
 };
