@@ -11,7 +11,7 @@ export const MenuItems = [
     },
     {
         title: 'RESERVATIONS',
-        url: '#',
+        url: '../Createreservation/Createreservation',
         cName: 'nav-links'
     },
     {

@@ -3,6 +3,7 @@ import { MenuItems } from './Menuitems';
 import { Button } from './Button';
 import './Navbar.css';
 import './Button.css';
+import {BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
 
 class Navbar extends Component {
     state = { clicked: false }
@@ -28,10 +29,11 @@ class Navbar extends Component {
                 })}
                 
             </ul>
-            <Button>Reserve Equipment</Button>
+            <Button> <a href="../Createreservation/Createreservation.js"></a>Reserve Equipment</Button>
             </nav>
         )
     }
+    
 }
 
 export default Navbar
