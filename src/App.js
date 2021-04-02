@@ -11,6 +11,7 @@ import Footer from './Footer';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import Grid from "@material-ui/core/Grid";
 import Context from './services/context';
+import Navbar from './Navbar/Navbar';
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -89,6 +90,7 @@ function App(props) {
         >
           OUTDOOR RESOURCE CENTER
         </h1>
+        <Navbar />
         <Grid alignItems="center" container>
           <Grid xs={3} sm={3} alignItems="center" item />
           <Grid xs={6} sm={6} alignItems="center" item>
