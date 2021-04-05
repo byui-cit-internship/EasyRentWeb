@@ -133,7 +133,7 @@ console.log(reservationItems)
         reservationItems: reservationItems,
         dueDate: 1617730620000
     }
-    fetch("https://easyrent-api-dev.cit362.com/reservations", {
+    fetch("http://localhost:5000/api/reservations", {
         method:'POST',
         body: JSON.stringify(reservation)
     }).then(res => {
