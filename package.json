@@ -35,6 +35,7 @@
     "react-multiselect-checkboxes": "^0.1.1",
     "react-native-web": "^0.14.12",
     "react-picker": "^1.2.16",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-select": "^4.1.0",
     "react-spinning-wheel": "^1.1.7",
