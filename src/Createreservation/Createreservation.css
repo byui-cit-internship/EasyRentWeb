@@ -1,0 +1,69 @@
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.reserve-header {
+    grid-column: 1/-1;
+}
+
+.Paddle {
+    grid-column: 1/2;
+    width: auto;
+    text-align: center;
+    padding: 20px;
+}
+.Paddle-amount{
+    padding: 10px;
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+.LifeJacket {
+    grid-column: 2/3;
+    width: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.LifeJacket-amount{
+    padding: 10px;
+    grid-row: 1/2;
+}
+
+.Canoe {
+    grid-column: 3/4;
+    width: auto;
+    text-align: center;
+    padding: 20px;
+}
+.Canoe-amount{
+    padding: 10px;
+    grid-row: 1/2;
+}
+
+select{
+    background-color: #007bff;
+    color: white;
+    padding: 2%;
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.submit-button{
+    border-radius: 7px;
+    grid-column: 2/3;
+    background-color: #007bff;
+    padding: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+    .main-content {
+        display: block;
+    }
+}
