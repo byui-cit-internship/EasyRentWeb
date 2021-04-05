@@ -137,8 +137,11 @@ console.log(reservationItems)
         method:'POST',
         body: JSON.stringify(reservation)
     }).then(res => {
-        console.log("Request Complete! Response: ", res)
+        alert("Equipment Secured!", res)
     })
+    getCanoeAmount.value = 0
+    getPaddleAmount.value = 0
+    getLifeJacketAmount.value = 0
 }
 
 export default Createreservation

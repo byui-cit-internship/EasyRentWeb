@@ -4,6 +4,7 @@ import { Button } from './Button';
 import './Navbar.css';
 import './Button.css';
 import {BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
+import Createreservation from '../Createreservation/Createreservation'
 
 class Navbar extends Component {
     state = { clicked: false }
@@ -29,7 +30,11 @@ class Navbar extends Component {
                 })}
                 
             </ul>
-            <Button> <a href="../Createreservation/Createreservation.js"></a>Reserve Equipment</Button>
+                <Link to="../Createreservation/Createreservation">
+                    <Button type="button">
+                        Reserve Equipment
+                    </Button>
+                </Link>
             </nav>
         )
     }

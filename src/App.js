@@ -14,7 +14,8 @@ import Context from './services/context';
 import Navbar from './Navbar/Navbar';
 import Createreservation from './Createreservation/Createreservation';
 import Returns from './Returns/Returns';
-import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import HomePage from './HomePage/HomePage'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -96,6 +97,10 @@ function App(props) {
         <Router>
         <Navbar />
           <Switch>
+            <Redirect exact from="/" to="HomePage"/>
+          <Route path='/HomePage'>
+              <HomePage />
+            </Route>
             <Route path='/Createreservation'>
               <Createreservation />
             </Route>
@@ -105,10 +110,10 @@ function App(props) {
           </Switch>   
         </Router>
 
-        
-
+                 
+                </div>
         <Footer />
-      </div>
+        
     </Context.Provider>
   )
 }
