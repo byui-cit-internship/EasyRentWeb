@@ -11,6 +11,10 @@ import Footer from './Footer';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import Grid from "@material-ui/core/Grid";
 import Context from './services/context';
+import Navbar from './Navbar/Navbar';
+import Createreservation from './Createreservation/Createreservation';
+import Returns from './Returns/Returns';
+import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -89,60 +93,20 @@ function App(props) {
         >
           OUTDOOR RESOURCE CENTER
         </h1>
-        <Grid alignItems="center" container>
-          <Grid xs={3} sm={3} alignItems="center" item />
-          <Grid xs={6} sm={6} alignItems="center" item>
-            {/* style={{ color: !switchToggle ? '#252222' : '' }}> */}
-            <h1 className={"TitleReservations"} variant="h1">
-              Returns by Due Date
-            </h1>
-          </Grid>
-          <Grid xs={3} sm={3} alignItems="center" item>
-            <div>
-              <BootstrapSwitchButton
-                checked={switchToggle}
-                onChange={toggleChecked}
-                width={110}
-                onlabel={'Outside'}
-                offlabel={'Inside'}
-                offstyle={'dark'}
-              />
-            </div>
-          </Grid>
-        </Grid>
+        <Router>
+        <Navbar />
+          <Switch>
+            <Route path='/Createreservation'>
+              <Createreservation />
+            </Route>
+            <Route path='/Returns'>
+              <Returns />
+            </Route>
+          </Switch>   
+        </Router>
 
-        {!filter && switchToggle && <>
-          <div className="Dropdown">
-            <DropdownButton title={dropdownSelected} onSelect={handleChange}>
-              <DropdownItem eventKey="Past Due">Past Due</DropdownItem>
-              <DropdownItem eventKey="Today">Today</DropdownItem>
-              <DropdownItem eventKey="Future">Future</DropdownItem>
-            </DropdownButton>
-          </div>
-          <div className="DPk">
-            <DatePicker className="datePicker"
-              selected={
-                daySelected.valueOf()
-                !== today.valueOf()
-                ? daySelected
-                : daySelected
-              }
-              onChange={date => setDaySelected(date)}
-              popperPlacement="bottom"
-              dateFormat="MMMM d, yyyy"
-            />
-          </div>
-        </>
-        }
-        <div>
-          <ReservationList
-            setSuggestions={setSuggestions}
-            filter={filter}
-            show={show}
-            daySelected={daySelected}
-            toggle={toggle}
-          />
-        </div>
+        
+
         <Footer />
       </div>
     </Context.Provider>
